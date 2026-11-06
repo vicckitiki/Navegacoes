@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Escola de Marinharia Clássica</title>
+<style>
+@keyframes flw{to{stroke-dashoffset:-16}}.vec{stroke-dasharray:5 3;animation:flw .7s linear infinite}
+:root{--bg:#e8eef0;--card:#f7fafa;--ink:#14232e;--mut:#4e6270;--acc:#0e5a73;--brass:#9a6b12;--red:#b3342b;--line:#b9c9d0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1620;--card:#13232f;--ink:#e6edf0;--mut:#98acb7;--acc:#5cc0dc;--brass:#e0b052;--red:#ef7a6e;--line:#27404f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1620;--card:#13232f;--ink:#e6edf0;--mut:#98acb7;--acc:#5cc0dc;--brass:#e0b052;--red:#ef7a6e;--line:#27404f;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Palatino,"Palatino Linotype","Book Antiqua",Georgia,serif}
+header{padding:28px 18px 8px;max-width:920px;margin:auto;display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0;letter-spacing:.01em}
+header p{margin:6px 0 0;color:var(--mut);font-style:italic}
+#th{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:8px 14px;max-width:100%}
+nav button{font:inherit;font-size:15px;background:none;border:0;border-bottom:3px solid transparent;color:var(--mut);padding:6px 11px;cursor:pointer}
+nav button.on{color:var(--ink);border-color:var(--brass);font-weight:700}
+main{max-width:920px;margin:auto;padding:16px 18px 60px}
+section{display:none}section.on{display:block}
+h2{font-size:26px;margin:8px 0 4px}h3{font-size:19px;margin:22px 0 8px;color:var(--acc)}
+.lead{color:var(--mut);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.grid button{font:inherit;text-align:left;background:var(--card);border:1px solid var(--line);color:var(--ink);padding:10px 12px;border-radius:6px;cursor:pointer}
+.grid button.on{border-color:var(--brass);box-shadow:inset 4px 0 0 var(--brass)}
+.grid small{display:block;color:var(--mut)}
+label{display:block;margin:8px 0 2px;font-size:15px;color:var(--mut)}
+input,select{font:inherit;width:100%;max-width:340px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+input[type=range]{padding:0}
+.out{margin-top:10px;padding:10px 12px;border-left:4px solid var(--brass);background:var(--bg);border-radius:0 6px 6px 0}
+.out b{color:var(--acc)}
+.row{display:flex;flex-wrap:wrap;gap:14px}.row>*{flex:1 1 300px}
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:15px}
+.bar span:first-child{width:110px;flex:none}.bar i{display:block;height:14px;background:var(--acc);border-radius:3px;opacity:.85}.bar i.m{background:var(--brass);height:6px;margin-top:3px;opacity:1}
+table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.sc{overflow-x:auto}
+.step{padding:9px 12px;border-left:4px solid var(--line);margin:6px 0;cursor:pointer}
+.step.on{border-color:var(--brass);background:var(--card)}.step b{color:var(--acc)}
+button.b{font:inherit;background:var(--acc);color:var(--bg);border:0;border-radius:6px;padding:7px 14px;cursor:pointer;margin:4px 6px 4px 0}
+.opt{display:block;width:100%;text-align:left;font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 12px;margin:6px 0;cursor:pointer}
+.opt.ok{border-color:#2e8b57;background:rgba(46,139,87,.2)}.opt.no{border-color:var(--red);background:rgba(179,52,43,.18)}
+svg text{font-family:inherit}
+.w,.d{cursor:pointer;fill:var(--acc);fill-opacity:.12;stroke:var(--line)}.w:hover,.w.on,.d:hover,.d.on{fill-opacity:.4}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+details{border-bottom:1px solid var(--line);padding:6px 0}summary{cursor:pointer;font-weight:700}
+#msv g{transition:transform .55s ease}
+</style></head><body>
+<header><div><h1>⚓ Escola de Marinharia Clássica</h1><p>Navios, ventos, astros e cartas — do século XV ao XVIII</p></div><button id="th" aria-label="Alternar tema">◐</button></header>
+<nav id="nav"></nav>
+<main>
+<section id="navios"><h2>Embarcações</h2><p class="lead">Toque em um tipo de navio para ver os detalhes e compare as velocidades.</p>
+<div class="grid" id="ships"></div><div class="card" id="sd"></div>
+<h3>Comparativo de velocidade (nós)</h3><div id="bars"></div><p class="lead">Barra grossa: cruzeiro. Barra fina dourada: máxima.</p></section>
+
+<section id="bordo"><h2>A bordo</h2><p class="lead">Toque nos setores ao redor do navio, visto de cima, para aprender as direções.</p>
+<div class="row"><div><svg id="ship" viewBox="0 0 300 300" style="width:100%;max-width:340px"></svg></div><div class="card" id="sec"></div></div>
+<h3>Os conveses</h3><p class="lead">Corte longitudinal de um galeão. Toque em cada compartimento.</p><div class="row"><div><svg id="dk" viewBox="0 0 400 240" style="width:100%"></svg></div><div class="card" id="dkp"></div></div><h3>Esqueleto estrutural</h3><p class="lead">Toque nas peças que formam a espinha dorsal e as costelas do casco.</p><div class="row"><div><svg id="sk" viewBox="0 0 400 210" style="width:100%"></svg></div><div class="card" id="skp"></div></div>
+<h3>Ferramentas e mecanismos</h3><p class="lead">Toque num equipamento para ver como funcionava a bordo.</p><div class="grid" id="tl"></div><div class="card" id="tlp"></div>
+<h3>Cadeia de comando e vozes</h3><p class="lead">Toque num posto para ver as suas funções e ordens a bordo.</p><div class="grid" id="cr"></div><div class="card" id="crp"></div></section></section>
+
+<section id="vento"><h2>Simulador de vento</h2><p class="lead">Mude o ângulo do vento em relação à proa e veja a velocidade que o navio alcança (tabela de referência do tratado).</p>
+<div class="row"><div class="card"><label>Tipo de velame</label><select id="wt"><option value="r">Velas redondas (nau, galeão, fragata)</option><option value="l">Velas latinas (caravela, chalupa)</option></select>
+<label>Velocidade máxima do navio: <b id="mxv">9</b> nós</label><input type="range" id="mx" min="4" max="14" value="9">
+<label>Vento vem de <b id="wav">90</b>° da proa</label><input type="range" id="wa" min="0" max="180" value="90">
+<div class="out" id="wo"></div></div><div><svg id="wsv" viewBox="0 0 220 220" style="width:100%;max-width:300px"></svg></div></div>
+<h3>Física: vetores na vela, quilha e leme</h3>
+<div class="row"><div class="card"><h4 style="margin:0 0 6px">Vela + Quilha (Sustentação × Arrasto)</h4><label>Regime</label><select id="vm"><option value="b">Bolina (60° — sustentação / asa)</option><option value="t">Través (90° — sustentação máxima)</option><option value="p">Popa (180° — arrasto / paraquedas)</option></select><div class="out" id="vmo"></div></div><div><svg id="vms" viewBox="0 0 260 220" style="width:100%;max-width:320px"></svg></div></div>
+<div class="row" style="margin-top:10px"><div class="card"><h4 style="margin:0 0 6px">Governo: Cana × Roda do leme</h4><label>Mecanismo</label><select id="rm"><option value="c">Cana do leme (alavanca direta — inversa)</option><option value="r">Roda do leme (gualdropes — direta)</option></select><label>Comando na mão: <b id="rav">0</b>°</label><input type="range" id="ra" min="-30" max="30" value="15"><div class="out" id="rmo"></div></div><div><svg id="rms" viewBox="0 0 260 190" style="width:100%;max-width:320px"></svg></div></div>
+<h3>Orçar e arribar</h3><div class="card">As velas da proa (bujarronas, traquete) empurram a proa para longe do vento: o navio <b>arriba</b>. A mezena, na popa, empurra a popa para longe do vento: a proa vai para dentro dele e o navio <b>orça</b>. Sem leme, o piloto ainda governava com essas velas.</div></section>
+
+<section id="calc"><h2>Calculadoras de navegação</h2><p class="lead">Faça as contas como um piloto de 1550.</p>
+<div class="row">
+<div class="card"><h3 style="margin-top:0">Barquinha: velocidade</h3><p class="lead">Nós de corda que passaram pela mão durante a ampulheta.</p>
+<label>Segundos da ampulheta</label><input type="number" id="bs" value="28">
+<label>Distância entre nós na corda (m)</label><input type="number" id="bsp" value="14.4" step="0.1"><label>Nós contados</label><input type="number" id="bn" value="7"><div class="out" id="bo"></div></div>
+<div class="card"><h3 style="margin-top:0">Latitude pelo Sol ao meio-dia</h3>
+<label>Altura medida do Sol (°)</label><input type="number" id="lh" value="51.3" step="0.1">
+<label>Declinação do Sol no dia (°, norte positivo)</label><input type="number" id="ld" value="0" step="0.1">
+<label>O Sol está</label><select id="ls"><option value="s">ao sul do observador</option><option value="n">ao norte do observador</option></select><div class="out" id="lo"></div></div>
+<div class="card"><h3 style="margin-top:0">Longitude pelo relógio</h3><p class="lead">A Terra gira 15° por hora.</p>
+<label>Diferença de horas para o meridiano de origem</label><input type="number" id="gh" value="2" step="0.25">
+<label>Seu meio-dia chegou</label><select id="gs"><option value="o">depois (você está a oeste)</option><option value="e">antes (você está a leste)</option></select><div class="out" id="go"></div></div>
+<div class="card"><h3 style="margin-top:0">Tempo de viagem</h3>
+<label>Distância (milhas náuticas)</label><input type="number" id="vd" value="24">
+<label>Velocidade (nós)</label><input type="number" id="vv" value="6"><div class="out" id="vo"></div></div>
+<div class="card"><h3 style="margin-top:0">Conversor de distância</h3>
+<label>Milhas náuticas</label><input type="number" id="cn" value="10"><div class="out" id="co"></div></div></div>
+<h3>Astronomia e instrumentos de altura</h3><p class="lead">Escolha o astro ou instrumento e ajuste a altura para simular a leitura no mar.</p>
+<div class="row"><div class="card"><label>Método / Instrumento</label><select id="ai"><option value="0">Estrela Polar (Hemisfério Norte)</option><option value="1">Cruzeiro do Sul (Hemisfério Sul)</option><option value="2">Quadrante com fio de prumo</option><option value="3">Balestilha (Báculo de Jacó)</option><option value="4">Astrolábio náutico</option></select><label>Altura medida: <b id="aav">35</b>°</label><input type="range" id="aa" min="5" max="80" value="35"><div class="out" id="ao"></div></div><div><svg id="asv" viewBox="0 0 280 200" style="width:100%;max-width:340px"></svg></div></div>
+<div class="card"><h3 style="margin-top:0">Navegação estimada e prumo de mão</h3><p class="lead">Calcule o avanço diário (loxodromia) ou consulte as marcas de profundidade do prumo de mão.</p>
+<div class="row"><div><label>Rumo cardeal/colateral (quarta): <b id="lrv">Leste-Nordeste (ENE)</b></label><select id="lr"><option value="28.125">Leste-Nordeste (ENE — 6ª quarta)</option><option value="45">Nordeste (NE — 4ª quarta)</option><option value="67.875">Lés-Quarto-Nordeste (ENE¼NE)</option><option value="78.75">Leste (E — 8ª quarta)</option></select><label>Distância percorrida no quarto (léguas): <b id="ldv">18</b></label><input type="range" id="ldt" min="4" max="40" value="18"><div class="out" id="lto"></div></div>
+<div><h4 style="margin:0 0 6px">Prumo de mão (marcas da sondada)</h4><p class="lead" style="margin:0 0 6px">Marcas de couro, pano e corda para medir braças no escuro ou nevoeiro.</p><div class="out"><b>2, 3 e 5 braças:</b> pedaços de couro preto.<br><b>7 braças:</b> pano vermelho.<br><b>10 braças:</b> pedaço de couro com um furo.<br><b>13 braças:</b> pano azul ou couro.<br><b>15 braças:</b> pano branco.<br><b>20 braças:</b> corda com dois nós.</div></div></div></div></section>
+
+<section id="cartas"><h2>Cartas náuticas</h2><p class="lead">Aprenda a construir uma carta portulana e a mapear uma costa.</p>
+<div class="card"><h3 style="margin-top:0">Desenhar uma portulana</h3><button class="b" id="p1">Anterior</button><button class="b" id="p2">Próximo passo</button><div class="row"><div><svg id="pts" viewBox="0 0 300 300" style="width:100%;max-width:380px"></svg></div><div id="ptx"></div></div></div>
+<div class="card"><h3 style="margin-top:0">Triangulação costeira (dupla marcação)</h3><p class="lead">O navio segue em linha reta e visa o mesmo pico de dois pontos. A interseção das visadas revela onde ele está.</p><div class="row"><div><label>Base navegada: <b id="tdv"></b> milhas</label><input type="range" id="td" min="2" max="20" value="8"><label>Ângulo da visada na posição 1: <b id="tav"></b>°</label><input type="range" id="ta" min="25" max="65" value="40"><label>Ângulo na posição 2: <b id="tbv"></b>°</label><input type="range" id="tb" min="25" max="65" value="50"><div class="out" id="to"></div></div><div><svg id="tv" viewBox="0 0 300 200" style="width:100%;max-width:380px"></svg></div></div></div>
+<div class="card sc"><h3 style="margin-top:0">Símbolos da carta</h3><table><tr><td><b>12, 7, 4</b></td><td>Sondagens em braças na baixa-mar. Siga os números maiores para achar o canal.</td></tr><tr><td><b>✚</b></td><td>Rocha submersa que o vigia não vê. Com pontos nos cantos, aflora na maré baixa.</td></tr><tr><td><b>· · ·</b></td><td>Banco de areia ou baixio, muitos secam na baixa-mar.</td></tr><tr><td><b>⚓</b></td><td>Fundeadouro testado, de 4 a 12 braças e boa tença.</td></tr><tr><td><b>a. l. c. p.</b></td><td>Fundo: areia, lama, conchas, pedra. Nunca fundeie sobre pedra.</td></tr><tr><td><b>Linhas coloridas</b></td><td>Pretas: 8 ventos; verdes: 8 meios-ventos; vermelhas: 16 quartos.</td></tr></table></div><div class="card"><h3 style="margin-top:0">Plotagem com régua paralela e compasso</h3><p class="lead">Transfira o rumo da rosa dos ventos para o ponto de partida e marque a distância com o compasso de pontas secas.</p><div class="row"><div><label>Rumo na rosa: <b id="prmv">65</b>°</label><input type="range" id="prm" min="20" max="140" value="65"><label>Distância navegada: <b id="pdtv">12</b> léguas</label><input type="range" id="pdt" min="4" max="22" value="12"><div class="out" id="plo"></div></div><div><svg id="plv" viewBox="0 0 300 200" style="width:100%;max-width:380px"></svg></div></div></div>
+<div class="card"><h3 style="margin-top:0">Rosa dos ventos (32 quartas)</h3><p class="lead">Rode a agulha de 11,25° em 11,25° para ler as 32 quartas e os ventos clássicos do Mediterrâneo.</p><div class="row"><div><label>Quarta selecionada: <b id="cpv">0</b> / 32</label><input type="range" id="cpr" min="0" max="31" value="0"><div class="out" id="cpo"></div></div><div><svg id="cps" viewBox="0 0 240 240" style="width:100%;max-width:280px"></svg></div></div></div></section>
+<section id="man"><h2>Manobras passo a passo</h2><p class="lead">Escolha uma manobra e toque nos passos, ou use os botões.</p>
+<select id="ms"></select><div class="row" style="margin-top:10px;align-items:center"><div id="mst"></div><div style="text-align:center"><svg id="msv" viewBox="0 0 220 200" style="width:100%;max-width:260px"></svg></div></div>
+<button class="b" id="pv">Anterior</button><button class="b" id="nx">Próximo</button><div class="card" id="mnote"></div></section>
+
+<section id="guerra"><h2>Guerra, corso e vida a bordo</h2>
+<h3>Quem é quem no mar</h3><div class="grid" id="who" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"></div>
+<h3>Munição naval</h3><div class="card sc"><table id="amm"></table></div>
+<h3>Quartos de serviço (turnos de 4 horas)</h3><div class="card sc"><table id="wat"></table><p class="lead" style="margin:8px 0 0">Os dois quartos de cão (16h–18h e 18h–20h) tornam o número de turnos ímpar e invertem a escala a cada dia.</p></div>
+<h3>Comida, bebida e doença</h3><div class="card"><b>Biscoito de mar:</b> farinha e água assadas até virar telha; mergulhado no caldo para mastigar. Após dois meses nos trópicos enchia de gorgulhos. <b>Carne:</b> em salmoura forte, arrastada no mar atrás do navio para tirar o sal.<div id="drk" style="margin-top:8px"></div><p class="lead" style="margin:0">Ração diária de bebida (litros). Em 1740 o almirante Vernon ordenou diluir o rum em água, com açúcar e limão: nasceu o grogue.</p></div><div class="card"><b>Escorbuto:</b> falta de vitamina C. <div class="step">Gengivas incham e cobrem os dentes, cicatrizes antigas reabrem, manchas roxas aparecem.</div><div class="step">Portugueses e espanhóis já curavam doentes com laranjas e cebolas em Santa Helena.</div><div class="step on"><b>1747:</b> James Lind testa cítricos. Depois, as viagens de Cook e o limão no grogue o erradicam.</div></div></section>
+
+<section id="taticas"><h2>Táticas de batalha</h2><p class="lead">Simule os três momentos decisivos de um combate a vela.</p>
+<div class="card"><h3 style="margin-top:0">Cruzar o T</h3><p class="lead">Mova o atacante em volta do inimigo. As áreas vermelhas mostram onde os canhões do inimigo alcançam.</p><div class="row"><div><label>Posição do atacante: <b id="rkv"></b>° a partir da proa do inimigo</label><input type="range" id="rka" min="0" max="180" value="90"><div class="out" id="rko"></div></div><div><svg id="rks" viewBox="0 0 300 240" style="width:100%;max-width:360px"></svg></div></div></div>
+<div class="card"><h3 style="margin-top:0">A disputa pelo barlavento</h3><p class="lead">O vento inclina os dois navios para sotavento. Escolha seu lado.</p><div class="row"><div><label>Você está</label><select id="blw"><option value="b">a barlavento (de onde vem o vento)</option><option value="s">a sotavento</option></select><div class="out" id="blo"></div></div><div><svg id="bls" viewBox="0 0 300 170" style="width:100%;max-width:360px"></svg></div></div></div>
+<div class="card"><h3 style="margin-top:0">Abordagem pirata em 4 fases</h3><button class="b" id="bp1">Anterior</button><button class="b" id="bp2">Próxima fase</button><div class="row"><div><svg id="bps" viewBox="0 0 300 180" style="width:100%;max-width:360px"></svg></div><div id="bpl"></div></div></div></section>
+
+<section id="hist"><h2>Rotas oceânicas e civilizações</h2>
+<div class="card"><h3 style="margin-top:0">A Volta do Mar</h3><p class="lead">Para vencer ventos e correntes contrárias, os pilotos portugueses afastavam-se da costa e seguiam os grandes giros do Atlântico.</p>
+<div class="row"><div><label>Rota histórica</label><select id="vmsel"><option value="0">Volta da Mina / Guiné (Atlântico Norte)</option><option value="1">Carreira da Índia — Ida (Atlântico Sul)</option><option value="2">Tornaviagem — Regresso da Índia</option></select><div class="out" id="vmout"></div></div><div><svg id="vmap" viewBox="0 0 300 240" style="width:100%;max-width:360px"></svg></div></div></div>
+<h3>Grandes navegadores</h3><div class="grid" id="navg"></div><div class="card" id="navgp"></div>
+<h3>Outras tradições marítimas</h3><div class="grid" id="civ"></div><div class="card" id="civp"></div></section>
+
+<section id="gl"><h2>Glossário</h2><input type="search" id="gq" placeholder="Buscar termo…" style="margin-bottom:10px"><div id="gll"></div></section>
+
+<section id="qz"><h2>Quiz</h2><label>Tema</label><select id="qt" style="margin-bottom:8px"><option value="0">Todos os temas</option><option value="1">Navios e estrutura</option><option value="2">Vento e manobras</option><option value="3">Navegação e cartas</option><option value="4">Guerra, vida e história</option></select><p class="lead" id="qs"></p><div class="card" id="qb"></div></section>
+</main>
+<script>
+const $=s=>document.querySelector(s)||{},H=(e,h)=>{if(e)e.innerHTML=h};
+const tabs=[["navios","Navios"],["bordo","A bordo"],["vento","Vento"],["calc","Cálculos"],["cartas","Cartas"],["man","Manobras"],["taticas","Táticas"],["guerra","Guerra e vida"],["hist","História"],["gl","Glossário"],["qz","Quiz"]];
+function show(id){document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id==id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.i==id));scrollTo(0,0)}
+H($("#nav"),tabs.map(t=>`<button data-i="${t[0]}">${t[1]}</button>`).join(""));
+$("#nav").onclick=e=>{if(e.target.dataset.i)show(e.target.dataset.i)};
+$("#th").onclick=()=>{const d=document.documentElement,dk=matchMedia("(prefers-color-scheme:dark)").matches;const cur=d.dataset.theme||(dk?"dark":"light");d.dataset.theme=cur=="dark"?"light":"dark"};
+/* NAVIOS */
+const S=[
+["Galé","150–300 t","1–2 mastros com velas latinas e 24–30 pares de remos","1,2–1,8 m",2.5,7,"Combate costeiro, abalroamento e abordagem em calmaria.","Longa e estreita (até 8:1), movida por galeotes. O esporão na proa quebrava remos inimigos no Mediterrâneo."],
+["Caravela","50–150 t","2–3 mastros, velas latinas (ou mistas na Redonda)","1,8–2,5 m",4.5,8,"Exploração oceânica, cartografia costeira e bolina.","Leve e de baixo calado, subia estuários e navegava em ângulos agudos contra o vento."],
+["Nau (Carraca)","400–1.000 t","3–4 mastros: redondas à frente, latina na mezena","4,5–6 m",3.75,7,"Transporte pesado de especiarias.","Casco bojudo e castelos altos que viravam fortalezas, mas também velas parasitas que faziam a nau derivar."],
+["Galeão","500–1.200 t","3–4 mastros: redondas e mezena latina","4,5–5,8 m",5,8.5,"Escolta de frotas do tesouro e artilharia.","Castelo de proa rebaixado, quilha mais longa (3,5:1 a 4:1) e estabilidade para duas cobertas de canhões."],
+["Nau de linha","1.500–3.500 t","3 mastros, até 4 ordens de velas por mastro","6,5–8 m",5,9,"Batalhas em linha e bloqueio de portos.","64 a 120 canhões e até 850 homens: lenta, feita para resistir a horas de bombardeio."],
+["Fragata","600–1.400 t","3 mastros, uma só bateria coberta","4–5,2 m",7,12.5,"Patrulha, escolta e caça a corsários.","Casco esguio: rápida para fugir de uma nau de linha e forte para destruir navios menores."],
+["Chalupa / Brigue","80–250 t","1 mastro (chalupa) ou 2 (brigue)","1,8–3 m",7.5,12,"Pirataria, corso e ataques em baixios.","Poucos homens para manobrar e calado raso para se esconder onde as fragatas encalhavam."]];
+H($("#ships"),S.map((s,i)=>`<button data-i="${i}">${s[0]}<small>${s[1]}</small></button>`).join(""));
+const SI=[
+/* 0: Galé */
+/* 0: Galé */
+`<path d="M8 76L38 78L44 72H184L196 58L210 62L198 90H44L34 80Z" fill="var(--brass)" stroke="var(--ink)" stroke-width="1.5"/><path d="M182 72Q196 52 212 62" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M85 72V18M152 72V26" stroke="var(--ink)" stroke-width="2.5"/><path d="M46 66L114 14Q98 46 104 66Z M118 66L176 22Q164 48 168 66Z" fill="var(--card)" stroke="var(--ink)" stroke-width="1.5"/><path d="M62 80L50 98M76 80L64 98M90 80L78 98M104 80L92 98M118 80L106 98M132 80L120 98M146 80L134 98M160 80L148 98M174 80L162 98" stroke="var(--ink)" stroke-width="1.5"/>`,
+/* 1: Caravela */
+`<path d="M35 76L18 64M35 76Q45 94 60 94H175Q190 94 198 64L172 68L165 80H55L45 72Z" fill="var(--brass)" stroke="var(--ink)"/><path d="M78 80V22M132 80V18M178 70V32" stroke="var(--ink)" stroke-width="2"/><path d="M48 70L102 20L95 72Z M102 70L158 16L148 72Z M156 64L196 30L188 64Z" fill="var(--card)" stroke="var(--ink)"/>`,
+/* 2: Nau (Carraca) */
+`<path d="M32 62L10 46M32 56H62L68 78H152L160 50H196L190 94H48L32 62Z" fill="var(--brass)" stroke="var(--ink)"/><path d="M52 56V20M110 78V10M172 50V22" stroke="var(--ink)" stroke-width="2.5"/><rect x="38" y="26" width="28" height="24" rx="2" fill="var(--card)" stroke="var(--ink)"/><rect x="86" y="16" width="48" height="22" rx="2" fill="var(--card)" stroke="var(--ink)"/><rect x="82" y="42" width="56" height="28" rx="2" fill="var(--card)" stroke="var(--ink)"/><path d="M155 46L195 22L188 48Z" fill="var(--card)" stroke="var(--ink)"/>`,
+/* 3: Galeão */
+`<path d="M34 68L8 50M34 64H68L74 76H155L162 56H196V46H204L196 94H48L34 68Z" fill="var(--brass)" stroke="var(--ink)"/><path d="M56 64V18M114 76V8M174 56V20" stroke="var(--ink)" stroke-width="2.5"/><rect x="40" y="24" width="32" height="32" rx="2" fill="var(--card)" stroke="var(--ink)"/><rect x="92" y="12" width="44" height="22" rx="2" fill="var(--card)" stroke="var(--ink)"/><rect x="86" y="38" width="56" height="30" rx="2" fill="var(--card)" stroke="var(--ink)"/><path d="M156 50L198 22L190 52Z" fill="var(--card)" stroke="var(--ink)"/>`,
+/* 4: Nau de linha */
+`<path d="M32 68L6 48M32 64H198L192 94H44L32 68Z" fill="var(--brass)" stroke="var(--ink)"/><line x1="38" y1="74" x2="194" y2="74" stroke="var(--ink)" stroke-dasharray="4 4"/><line x1="42" y1="82" x2="192" y2="82" stroke="var(--ink)" stroke-dasharray="4 4"/><path d="M62 64V12M118 64V6M172 64V16" stroke="var(--ink)" stroke-width="2.5"/><g fill="var(--card)" stroke="var(--ink)"><rect x="46" y="16" width="32" height="14"/><rect x="42" y="32" width="40" height="26"/><rect x="100" y="10" width="36" height="14"/><rect x="94" y="26" width="48" height="32"/><rect x="156" y="20" width="32" height="16"/><path d="M158 40L198 28L192 58H158Z"/></g>`,
+/* 5: Fragata */
+`<path d="M28 74L4 58M28 70H196L188 92H42L28 74Z" fill="var(--brass)" stroke="var(--ink)"/><line x1="38" y1="78" x2="190" y2="78" stroke="var(--ink)" stroke-dasharray="4 4"/><path d="M64 70V16M118 70V10M170 70V20" stroke="var(--ink)" stroke-width="2"/><g fill="var(--card)" stroke="var(--ink)"><rect x="46" y="22" width="36" height="42" rx="2"/><rect x="96" y="16" width="44" height="48" rx="2"/><rect x="154" y="24" width="30" height="20" rx="2"/><path d="M158 48L196 36L190 64H158Z"/></g>`,
+/* 6: Chalupa / Brigue */
+`<path d="M48 78L16 66M48 76H182L174 92H60L48 78Z" fill="var(--brass)" stroke="var(--ink)"/><path d="M102 76V14" stroke="var(--ink)" stroke-width="2.5"/><path d="M48 72L98 22V72Z M24 68L98 16L68 70Z M106 24L168 18L176 68H106Z" fill="var(--card)" stroke="var(--ink)"/>`
+];
+function ship(i){document.querySelectorAll("#ships button").forEach((b,j)=>b.classList.toggle("on",i==j));const s=S[i];H($("#sd"),`<div class="row"><div style="flex:2 1 280px"><b style="font-size:20px">${s[0]}</b><p>${s[7]}</p><table><tr><th>Porte</th><td>${s[1]}</td></tr><tr><th>Mastreação</th><td>${s[2]}</td></tr><tr><th>Calado</th><td>${s[3]}</td></tr><tr><th>Velocidade</th><td>${s[4]} nós de cruzeiro, ${s[5]} de máxima</td></tr><tr><th>Emprego</th><td>${s[6]}</td></tr></table></div><div style="flex:1 1 200px;display:flex;align-items:center"><svg viewBox="0 0 220 110" style="width:100%">${SI[i]}<path d="M0 90Q28 86 55 90T110 90T165 90T220 90" fill="none" stroke="var(--acc)" stroke-width="1.5"/></svg></div></div>`)}
+$("#ships").onclick=e=>{const b=e.target.closest("button");if(b)ship(+b.dataset.i)};ship(0);
+H($("#bars"),S.map(s=>`<div class="bar"><span>${s[0]}</span><div style="flex:1"><i style="width:${s[4]/13*100}%"></i><i class="m" style="width:${s[5]/13*100}%"></i></div><span style="width:70px;text-align:right">${s[4]} / ${s[5]}</span></div>`).join(""));
+
+/* A BORDO */
+const SEC=["Proa","Amura de estibordo","Través de estibordo","Alheta de estibordo","Popa","Alheta de bombordo","Través de bombordo","Amura de bombordo"];
+const SD=["Extremidade dianteira, que corta as ondas. Ir para lá é ir para vante. Dela partem os tiros de caça, mas é um ângulo morto para os canhões laterais.","Diagonal dianteira direita, a cerca de 45° da proa. Se o vigia grita “Vela na amura de estibordo!”, o alvo está ali.","Perpendicular ao navio, a 90° à direita. É onde a bateria completa concentra o fogo máximo.","Diagonal traseira direita (135°). Piratas preferiam essa posição para ficar fora do tiro dos canhões laterais da vítima.","Extremidade traseira, com leme e aposentos de comando. Ir para lá é ir para ré. Fica exposta ao tiro de enfiada.","Diagonal traseira esquerda (135°). Bombordo é a esquerda de quem está na popa olhando para a proa.","Perpendicular ao navio, a 90° à esquerda: o outro lado da bateria.","Diagonal dianteira esquerda, a cerca de 45° da proa."];
+const pt=(a,r)=>[150+r*Math.sin(a*Math.PI/180),150-r*Math.cos(a*Math.PI/180)].map(n=>n.toFixed(1));
+let sv="";for(let i=0;i<8;i++){const c=i*45,p=pt(c-22.5,140),q=pt(c+22.5,140);sv+=`<path class="w" tabindex="0" data-i="${i}" d="M150 150L${p[0]} ${p[1]}A140 140 0 0 1 ${q[0]} ${q[1]}Z"/>`}
+sv+=`<path d="M150 45C185 90 185 210 170 255L130 255C115 210 115 90 150 45Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2" pointer-events="none"/><line x1="150" y1="70" x2="150" y2="240" stroke="var(--line)" pointer-events="none"/><text x="150" y="22" text-anchor="middle" fill="var(--ink)" font-size="14">PROA</text><text x="150" y="294" text-anchor="middle" fill="var(--ink)" font-size="14">POPA</text><text x="8" y="154" fill="var(--mut)" font-size="13">bombordo</text><text x="292" y="154" text-anchor="end" fill="var(--mut)" font-size="13">estibordo</text>`;
+H($("#ship"),sv);
+function sec(i){document.querySelectorAll(".w").forEach(w=>w.classList.toggle("on",w.dataset.i==i));H($("#sec"),`<b style="font-size:19px">${SEC[i]}</b><p>${SD[i]}</p>`)}
+$("#ship").onclick=e=>{if(e.target.dataset.i)sec(e.target.dataset.i)};$("#ship").onkeydown=e=>{if(e.key=="Enter"&&e.target.dataset.i)sec(e.target.dataset.i)};sec(0);
+
+
+/* VENTO */
+const B={r:[[45,0,"Zona morta","deriva de ré","As velas batem e o navio só passa por inércia."],[60,0,"Bolina cerrada","10–18°","Difícil manter o rumo."],[65,35,"Bolina cerrada","10–18°","Forte deriva lateral."],[80,60,"Bolina folgada","7–12°","Regime misto de sustentação."],[110,85,"Vento pelo través","5–8°","Balanço lateral constante."],[155,100,"Vento pelo largo / alheta","2–4°","Todas as velas portam vento limpo."],[180,80,"Vento em popa","0°","As velas de trás tiram o vento das da frente."]],
+l:[[45,0,"Zona morta","deriva de ré","Atravessa só por inércia na cambada."],[65,65,"Bolina cerrada","10–18°","Grande vantagem tática pirata."],[80,82,"Bolina folgada","7–12°","Ótimo desempenho."],[110,100,"Vento pelo través","5–8°","Melhor regime de sustentação."],[155,88,"Vento pelo largo / alheta","2–4°","Bom rendimento."],[180,70,"Vento em popa","0°","Risco constante de cambada violenta da retranca."]]};
+function wind(){const a=+$("#wa").value,t=$("#wt").value,m=+$("#mx").value;H($("#wav"),a);H($("#mxv"),m);const r=B[t].find(x=>a<=x[0]);const v=(m*r[1]/100).toFixed(1);
+H($("#wo"),`<b>${r[2]}</b><br>Velocidade: <b>${v} nós</b> (${r[1]}% da máxima)<br>Abatimento: ${r[3]}<br>${r[4]}`);
+const p=pt(a,95).map(Number),q=pt(a,40).map(Number),u=(x,y)=>[x-70,y-40];
+let s=`<circle cx="110" cy="110" r="95" fill="none" stroke="var(--line)"/><path d="M110 55C130 80 130 130 120 165L100 165C90 130 90 80 110 55Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>`;
+const X=a=>110+95*Math.sin(a*Math.PI/180),Y=a=>110-95*Math.cos(a*Math.PI/180),X2=a=>110+45*Math.sin(a*Math.PI/180),Y2=a=>110-45*Math.cos(a*Math.PI/180);
+s+=`<line x1="${X(a)}" y1="${Y(a)}" x2="${X2(a)}" y2="${Y2(a)}" stroke="var(--red)" stroke-width="4"/><circle cx="${X2(a)}" cy="${Y2(a)}" r="6" fill="var(--red)"/><text x="${X(a)}" y="${Y(a)-6}" text-anchor="middle" fill="var(--red)" font-size="13">vento</text><text x="110" y="14" text-anchor="middle" fill="var(--ink)" font-size="12">proa</text>`;
+const ra=a<=45?"":"";H($("#wsv"),s)}
+["wa","wt","mx"].forEach(i=>$("#"+i).oninput=wind);wind();
+function phys(){const m=$("#vm").value;let s=`<defs><marker id="a1" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 1L9 5L0 9Z" fill="var(--acc)"/></marker><marker id="a2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 1L9 5L0 9Z" fill="var(--red)"/></marker><marker id="a3" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 1L9 5L0 9Z" fill="var(--brass)"/></marker></defs><path d="M130 35C152 65 152 145 142 185L118 185C108 145 108 65 130 35Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><line x1="130" y1="55" x2="130" y2="170" stroke="var(--ink)" stroke-width="3"/>`;
+if(m=="p"){s+=`<line class="vec" x1="130" y1="212" x2="130" y2="145" stroke="var(--red)" stroke-width="2.5" marker-end="url(#a2)"/><path d="M90 110Q130 85 170 110" fill="none" stroke="var(--brass)" stroke-width="4"/><line class="vec" x1="130" y1="100" x2="130" y2="22" stroke="var(--acc)" stroke-width="3" marker-end="url(#a1)"/><text x="138" y="206" font-size="11" fill="var(--red)">Vento</text><text x="138" y="28" font-size="11" fill="var(--acc)">Avanço (arrasto)</text>`;
+H($("#vmo"),`<b>Arrasto puro (paraquedas):</b> o vento empurra a vela pela popa. Sem força lateral na quilha, mas o navio nunca ultrapassa a velocidade do vento.`)}
+else{const b=m=="b";s+=`<line class="vec" x1="${b?215:235}" y1="${b?55:110}" x2="142" y2="105" stroke="var(--red)" stroke-width="2.5" marker-end="url(#a2)"/><path d="${b?"M105 135Q125 105 155 85":"M100 125Q125 105 160 95"}" fill="none" stroke="var(--brass)" stroke-width="4"/><line class="vec" x1="130" y1="110" x2="${b?62:55}" y2="${b?82:55}" stroke="var(--brass)" stroke-width="2.5" marker-end="url(#a3)"/><line x1="130" y1="110" x2="62" y2="110" stroke="var(--red)" stroke-width="2" stroke-dasharray="3 2" marker-end="url(#a2)"/><line class="vec" x1="130" y1="125" x2="195" y2="125" stroke="var(--acc)" stroke-width="2.5" marker-end="url(#a1)"/><line class="vec" x1="130" y1="110" x2="130" y2="${b?35:20}" stroke="var(--acc)" stroke-width="3" marker-end="url(#a1)"/><text x="52" y="75" font-size="10" fill="var(--brass)">Força total</text><text x="32" y="124" font-size="10" fill="var(--red)">Deriva</text><text x="160" y="140" font-size="10" fill="var(--acc)">Reação quilha</text><text x="136" y="28" font-size="11" fill="var(--acc)">Avanço</text>`;
+H($("#vmo"),`<b>Sustentação (asa vertical):</b> o fluxo na vela gera uma força total perpendicular à lona. Ela decompõe-se numa grande <b>deriva lateral</b> (anulada pela quilha, restando 5° a 12° de abatimento) e na componente de <b>avanço</b>.`)}
+H($("#vms"),s)}
+function rud(){const m=$("#rm").value,a=+$("#ra").value,c=m=="c",ang=c?-a:a,r=ang*Math.PI/180,tx=130+38*Math.sin(a*Math.PI/180),ty=115-38*Math.cos(a*Math.PI/180),rx=130+42*Math.sin(r),ry=115+42*Math.cos(r);
+H($("#rav"),a);
+H($("#rms"),`<path d="M90 25L130 15L170 25L162 115H98Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><line class="vec" x1="82" y1="35" x2="82" y2="165" stroke="var(--acc)" stroke-width="1.5"/><line class="vec" x1="178" y1="35" x2="178" y2="165" stroke="var(--acc)" stroke-width="1.5"/>`+(c?`<line x1="130" y1="115" x2="${tx}" y2="${ty}" stroke="var(--brass)" stroke-width="4"/><circle cx="${tx}" cy="${ty}" r="4" fill="var(--brass)"/><text x="130" y="68" text-anchor="middle" font-size="10" fill="var(--mut)">cana do leme</text>`:`<circle cx="130" cy="82" r="16" fill="none" stroke="var(--brass)" stroke-width="3"/><line x1="130" y1="82" x2="${130+16*Math.sin(a*Math.PI/180)}" y2="${82-16*Math.cos(a*Math.PI/180)}" stroke="var(--brass)" stroke-width="2.5"/><path d="M114 82L98 110L130 115L162 110L146 82" fill="none" stroke="var(--mut)" stroke-dasharray="2 2"/>`)+`<line x1="130" y1="115" x2="${rx}" y2="${ry}" stroke="var(--red)" stroke-width="4"/><text x="130" y="180" text-anchor="middle" font-size="11" fill="var(--ink)">${ang==0?"Rumo reto":ang>0?"Proa vira a BOMBORDO":"Proa vira a ESTIBORDO"}</text>`);
+H($("#rmo"),c?`<b>Cana do leme:</b> alavanca direta. Empurrar a cana a estibordo leva a porta do leme a bombordo e faz a proa guinar a bombordo (daí a antiga ordem <i>“Leme a estibordo!”</i> para virar a bombordo).`:`<b>Roda do leme:</b> os gualdropes (cabos nos moitões) invertem a alavanca da cana: girar a roda para estibordo leva a proa para estibordo.`)}
+$("#vm").onchange=phys;["rm","ra"].forEach(i=>$("#"+i).oninput=rud);phys();rud();
+
+/* CÁLCULOS */
+const n=i=>parseFloat($("#"+i).value)||0,f=(x,d=1)=>x.toLocaleString("pt-BR",{maximumFractionDigits:d});
+function calc(){const sg=n("bs"),k=n("bn");const sp=n("bsp"),kn=k*sp/(sg||1)*3600/1852;H($("#bo"),`Espaçamento ideal para essa ampulheta: <b>${f(sg/3600*1852,2)} m</b><br>Velocidade: <b>${f(kn,1)} nós</b> (${f(kn*1.852,1)} km/h)`);
+const z=90-n("lh"),d=n("ld"),la=$("#ls").value=="s"?d+z:d-z;H($("#lo"),`Distância zenital: ${f(z)}°<br>Latitude: <b>${f(Math.abs(la))}° ${la>=0?"Norte":"Sul"}</b>`);
+const g=n("gh")*15,o=$("#gs").value=="o";H($("#go"),`Você está a <b>${f(g)}°</b> a <b>${o?"oeste":"leste"}</b> do meridiano de origem (${f(g*4,0)} minutos de tempo).`);
+const D=n("vd"),V=n("vv"),t=V?D/V:0;H($("#vo"),`Tempo: <b>${f(t,2)} h</b> (${f(t/4,2)} quartos de 4 h)<br>${f(V/3,2)} léguas por hora`);
+const nm=n("cn");H($("#co"),`${f(nm*1.852,2)} km<br>${f(nm/3,2)} léguas de 20 ao grau<br>${f(nm/60*17.5,2)} léguas de 17,5 ao grau (ibéricas, séc. XV–XVI)<br>${f(nm*10,1)} cabos<br>${f(nm*1852/1.8288,0)} braças`)}
+document.querySelectorAll("#calc input,#calc select").forEach(e=>e.oninput=calc);calc();
+const AI=[
+["Estrela Polar (Ursa Menor)","Quase sobre o polo norte celeste: a altura da Polar acima do horizonte é igual à latitude Norte (corrigida até ±1,5° pelo Regimento do Norte segundo a posição das Guardas)."],
+["Cruzeiro do Sul (Crux)","Sem estrela polar brilhante no Sul, os pilotos ibéricos prolongavam 4,5 vezes o braço maior da cruz (de Magalhães a Acrux) para achar o Polo Sul Celeste e mediam a sua altura."],
+["Quadrante","Quarto de círculo graduado de 0° a 90°. O piloto visava a estrela pelas pínulas e o fio de prumo com chumbo indicava a altura diretamente na escala. Muito sensível ao vento e ao balanço."],
+["Balestilha","Uma vara graduada (virote) onde corria uma travessa (martinete). O piloto encostava a ponta ao olho e alinhava a base da travessa ao horizonte e o topo ao astro. Excelente para estrelas."],
+["Astrolábio náutico","Pesado anel de bronze vazado (para o vento passar sem o abanar) suspenso pelo polegar. Ao meio-dia, girava-se a alidade até o raio de Sol atravessar os dois furos (sem cegar o piloto)."]
+];
+function ast(){const i=+$("#ai").value,a=+$("#aa").value,r=a*Math.PI/180;H($("#aav"),a);
+let s=`<line x1="15" y1="165" x2="265" y2="165" stroke="var(--acc)" stroke-dasharray="4 2"/><text x="260" y="178" text-anchor="end" font-size="10" fill="var(--acc)">horizonte</text>`;
+if(i==0){const x=45+165*Math.cos(r),y=165-140*Math.sin(r);s+=`<line x1="45" y1="165" x2="${x}" y2="${y}" stroke="var(--brass)" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="5" fill="var(--brass)"/><text x="${x}" y="${y-9}" text-anchor="middle" font-size="11" fill="var(--ink)">★ Polar</text><path d="M85 165A40 40 0 0 0 ${45+40*Math.cos(r)} ${165-40*Math.sin(r)}" fill="none" stroke="var(--ink)"/><text x="92" y="152" font-size="11" fill="var(--ink)">${a}° N</text>`}
+else if(i==1){const py=165-130*Math.sin(r),cy=Math.max(22,py-42);s+=`<g stroke="var(--brass)" fill="var(--brass)"><line x1="170" y1="${cy-12}" x2="170" y2="${cy+12}"/><line x1="160" y1="${cy-2}" x2="180" y2="${cy+2}"/><circle cx="170" cy="${cy-12}" r="2"/><circle cx="170" cy="${cy+12}" r="2.5"/><circle cx="160" cy="${cy-2}" r="2"/><circle cx="180" cy="${cy+2}" r="2"/></g><line x1="170" y1="${cy+12}" x2="170" y2="${py}" stroke="var(--red)" stroke-dasharray="3 2"/><circle cx="170" cy="${py}" r="3" fill="var(--red)"/><text x="178" y="${(cy+py)/2+6}" font-size="10" fill="var(--red)">4,5×</text><line x1="45" y1="165" x2="170" y2="${py}" stroke="var(--ink)"/><text x="178" y="${py+4}" font-size="10" fill="var(--ink)">Polo Sul (${a}° S)</text>`}
+else if(i==2){const x=100+95*Math.cos(r),y=105-75*Math.sin(r);s+=`<g transform="translate(100,105) rotate(${-a})"><path d="M0 0L85 0A85 85 0 0 1 0 85Z" fill="var(--card)" stroke="var(--brass)" stroke-width="2"/><rect x="15" y="-5" width="6" height="5" fill="var(--ink)"/><rect x="65" y="-5" width="6" height="5" fill="var(--ink)"/></g><line x1="100" y1="105" x2="100" y2="185" stroke="var(--red)" stroke-width="1.5"/><circle cx="100" cy="185" r="4" fill="var(--red)"/><line x1="100" y1="105" x2="${x}" y2="${y}" stroke="var(--brass)" stroke-dasharray="3 2"/><text x="112" y="182" font-size="10" fill="var(--red)">prumo (${a}°)</text>`}
+else if(i==3){const d=Math.max(28,Math.min(135,55/Math.tan(r/2))),h=d*Math.tan(r/2);s+=`<line x1="40" y1="125" x2="210" y2="125" stroke="var(--brass)" stroke-width="4"/><line x1="${40+d}" y1="${125-h}" x2="${40+d}" y2="${125+h}" stroke="var(--ink)" stroke-width="4"/><line x1="40" y1="125" x2="${40+d}" y2="${125-h}" stroke="var(--red)" stroke-dasharray="3 2"/><line x1="40" y1="125" x2="${40+d}" y2="${125+h}" stroke="var(--acc)" stroke-dasharray="3 2"/><text x="${44+d}" y="${122-h}" font-size="11" fill="var(--red)">★ Astro</text><text x="40" y="144" font-size="10" fill="var(--mut)">olho (${a}°)</text>`}
+else{const dx=55*Math.cos(r),dy=55*Math.sin(r);s+=`<circle cx="140" cy="95" r="55" fill="none" stroke="var(--brass)" stroke-width="6"/><circle cx="140" cy="32" r="7" fill="none" stroke="var(--brass)" stroke-width="2"/><path d="M105 95H175M140 60V130" stroke="var(--brass)" stroke-width="3"/><line x1="${140-dx}" y1="${95+dy}" x2="${140+dx}" y2="${95-dy}" stroke="var(--ink)" stroke-width="3"/><line x1="${140+dx*1.4}" y1="${95-dy*1.4}" x2="${140-dx*.7}" y2="${95+dy*.7}" stroke="var(--red)" stroke-dasharray="3 2"/><text x="${140+dx*1.3}" y="${90-dy*1.3}" font-size="12" fill="var(--brass)">☀ ${a}°</text>`}
+H($("#asv"),s);H($("#ao"),`<b>${AI[i][0]}:</b> ${AI[i][1]}<br>Leitura: <b>${a}°</b> de altura (distância zenital: <b>${90-a}°</b>).`)}
+["ai","aa"].forEach(i=>$("#"+i).oninput=ast);ast();
+function lox(){const a=+$("#lr").value,d=+$("#ldt").value,r=a*Math.PI/180,lat=d*Math.cos(r),dep=d*Math.sin(r);
+H($("#lrv"),$("#lr").options[$("#lr").selectedIndex].text);H($("#ldv"),d);
+H($("#lto"),`Distância: <b>${d} léguas</b> (${d*3} milhas náuticas)<br>Avanço em Latitude (N/S): <b>${f(lat,1)} léguas</b> (${f(lat*3,1)} mn)<br>Aportamento em Longitude / Departamento (E/O): <b>${f(dep,1)} léguas</b> (${f(dep*3,1)} mn)`)}
+$("#lr").onchange=lox;$("#ldt").oninput=lox;lox();
+
+/* MANOBRAS */
+const M={
+"Virar por davante (cambada)":{n:"Risco: se a proa para antes de cruzar o vento, o navio fica “em ferros”, sem governo e andando de ré. Saída: inverter o leme e bracear o traquete para um lado.",s:[["Ganhar velocidade","Arribar uns 5° (“Andar bom!”) para encher as velas e ganhar inércia. A equipe tira as voltas das malaguetas, deixando só uma de segurança."],["Leme de ló","Leme todo a sotavento. Soltam-se as escotas das bujarronas e do traquete e caça-se a mezena para ajudar a proa a subir ao vento."],["Zona morta","Vento na proa: as velas batem como tiros. Só a inércia mantém o fluxo no leme e a proa girando."],["Traquete encapelado","Com a proa 5° a 10° além do vento, o traquete ainda fica na posição antiga: o vento bate na frente dele e empurra a proa para o novo rumo."],["Camba o Grande","Soltam-se os braços de um lado e puxam-se os do outro. As vergas centrais giram e a vela volta a tracionar."],["Camba a proa","Giram-se as vergas do traquete, caçam-se as amuras e escotas e o timoneiro centraliza o leme."]]},
+"Virar em roda":{n:"Nunca falha, pois as velas ficam cheias o tempo todo, mas perde 400 a 900 m a sotavento. Perto de costa rochosa a sotavento isso podia ser fatal.",s:[["Arribar","Leme a barlavento, mezena solta e velas da proa cheias para afastar a proa do vento."],["Redondear as vergas","Com o vento passando para a popa, braceia-se continuamente para manter as vergas retas e as velas cheias."],["Domar a carangueja","Antes de a popa cruzar o vento, puxa-se a retranca da mezena para o centro e solta-se suavemente do outro lado, evitando o jibe violento."],["Orçar no novo bordo","Braceiam-se Grande e traquete no ângulo agudo, caça-se a mezena e volta-se à bolina."]]},
+"Partida (suspender o ferro)":{n:"O leme só funciona com água correndo no casco; por isso o truque do traquete invertido faz a proa girar enquanto o navio ainda está parado.",s:[["Virar a pique","“Guarnecer o cabrestante!” A tripulação gira as barras até a amarra ficar vertical.“A amarra está a pique!”"],["Largar gávea e velacho","Os gajeiros sobem e soltam as gáveas: altas, pegam vento limpo e são fáceis de manejar."],["Arrancar o ferro","“O ferro largou!” Braceia-se o traquete ao contrário para o vento empurrar a proa de lado, como um rebocador."],["Cambar a proa","Alinham-se as vergas, caçam-se escotas e bujarrona. O navio governa e ganha velocidade."]]},
+"Frear, capear e fundear":{n:"Pôr à capa deixa o navio quase parado (cerca de 0,5 nó de deriva) onde nenhuma âncora alcança o fundo. Cabo de fundeio: 3 a 5 vezes a profundidade.",s:[["Parada de emergência","Folgam-se as escotas da proa e braceia-se o Grande “todo sobre”: o vento bate na frente da vela e ela vira freio reverso."],["Pôr à capa","Gávea grande sobre, velacho cheio e leme amarrado a sotavento: uma força anula a outra e o navio fica estacionado."],["Fundear","Carregam-se as velas, aproa-se ao vento e “Larga o ferro!”. Solta-se cabo até a unha cravar."]]},
+"Carregar e disparar um canhão":{n:"Uma equipe de 6 a 12 homens, sob um cabo de peça, repetia isso sob fumaça e estrondo. O recuo de 2 toneladas era contido pela braga.",s:[["🧽 Esfregar","A lanada molhada apaga qualquer brasa: uma fagulha faria a próxima carga explodir nas mãos do carregador."],["🛢️ Pólvora e bucha","O pajem traz o cartucho do paiol. Entra pela boca com uma bucha e o soquete leva tudo ao fundo."],["⚫ Bala e segunda bucha","Insere-se a bala e outro taco de estopa, para ela não rolar para fora quando o navio balança."],["🎯 Pôr em bateria e apontar","As talhas puxam o canhão até a portinhola. Espeques levantam a culatra e a palmeta regula o alcance."],["🔥 Escorvar e disparar","A agulha fura o saco pelo ouvido, põe-se pólvora fina e a mecha toca no balanço certo da onda."]]},
+"Marchas de velocidade":{n:"Joanetes e cutelos dobravam a largura do navio em lona: 10 a 13 nós em perseguição. Em tempestade, tomavam-se rizos para reduzir a vela em 25%, 50% ou 75%.",s:[["1ª marcha: só gáveas","Gávea, velacho e bujarrona: 3 a 4 nós. Obrigatória em combate e entrada de portos; as faíscas dos canhões não alcançam as velas baixas."],["2ª marcha: cruzeiro","“Largar o Grande e o Traquete!” O navio salta para 6 a 8 nós."],["3ª marcha: tudo pano","Joanetes, sobrejoanetes, cutelos e varredouras: 10 a 13 nós."]]}};
+let mk=Object.keys(M),mi=0;H($("#ms"),mk.map((k,i)=>`<option value="${i}">${k}</option>`).join(""));
+const MV=[
+[[-50,35,35,-25],[-25,35,35,0],[0,35,35,0],[15,35,35,15],[38,35,-35,20],[50,-35,-35,25]],
+[[-55,35,35,-20],[-130,0,0,0],[175,0,0,0],[55,-35,-35,20]],
+[[0,0,0,0],[0,25,25,0],[25,-35,25,0],[50,30,30,15]],
+[[-60,-30,35,0],[-50,35,-30,15],[0,0,0,0]]
+];
+function man(){const idx=+$("#ms").value,m=M[mk[idx]];H($("#mst"),m.s.map((s,i)=>`<div class="step ${i==mi?"on":""}" data-i="${i}"><b>${i+1}. ${s[0]}</b>${i==mi?`<br>${s[1]}`:""}</div>`).join(""));H($("#mnote"),m.n);
+let s=`<rect width="220" height="200" rx="8" fill="var(--acc)" opacity=".1"/>`;
+if(idx<4){const v=MV[idx][mi];
+s+=`<path class="vec" d="M110 8V38M105 30L110 38L115 30" fill="none" stroke="var(--red)" stroke-width="2"/><text x="118" y="20" font-size="10" fill="var(--red)">vento</text>`;
+if(idx==2&&mi<2)s+=`<line x1="110" y1="75" x2="110" y2="50" stroke="var(--ink)" stroke-dasharray="3 2"/><text x="110" y="48" text-anchor="middle" font-size="13">⚓</text>`;
+if(idx==3&&mi==2)s+=`<line x1="110" y1="75" x2="110" y2="46" stroke="var(--ink)" stroke-width="1.5"/><text x="110" y="44" text-anchor="middle" font-size="14">⚓</text>`;
+s+=`<g transform="translate(110 118) rotate(${v[0]})"><path d="M0-42C16-18 16 24 10 42L-10 42C-16 24-16-18 0-42Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><line x1="0" y1="-26" x2="0" y2="30" stroke="var(--line)"/><g transform="translate(0 -20) rotate(${v[1]})"><line x1="-22" y1="0" x2="22" y2="0" stroke="var(--brass)" stroke-width="3.5"/></g><g transform="translate(0 2) rotate(${v[2]})"><line x1="-26" y1="0" x2="26" y2="0" stroke="var(--brass)" stroke-width="4"/></g><g transform="translate(0 22) rotate(${v[3]})"><line x1="0" y1="0" x2="0" y2="18" stroke="var(--brass)" stroke-width="3"/></g></g>`}
+else if(idx==4){const gx=[105,105,105,72,98][mi];
+s+=`<rect x="48" y="30" width="14" height="140" fill="var(--brass)" stroke="var(--ink)"/><rect x="46" y="82" width="18" height="28" fill="var(--bg)"/><g transform="translate(${gx} 90)"><rect x="0" y="-8" width="52" height="16" rx="3" fill="var(--ink)"/><rect x="10" y="8" width="36" height="10" fill="var(--brass)"/><circle cx="18" cy="20" r="5" fill="var(--ink)"/><circle cx="38" cy="20" r="5" fill="var(--ink)"/>`+(mi==0?`<line x1="-28" y1="0" x2="15" y2="0" stroke="var(--acc)" stroke-width="3"/>`:mi==1||mi==2?`<circle cx="-12" cy="0" r="6" fill="${mi==1?"var(--red)":"var(--ink)"}"/>`:mi==4?`<path d="M-12 0L-42-18L-34-4L-46 0L-34 4L-42 18Z" fill="var(--red)"/><circle cx="48" cy="-12" r="5" fill="var(--red)"/>`:``)+`</g>`}
+else{const n=mi+1;
+s+=`<path d="M35 155L18 140M35 150H185L176 172H48Z" fill="var(--brass)" stroke="var(--ink)"/><path d="M68 150V30M115 150V22M162 150V36" stroke="var(--ink)" stroke-width="2.5"/><g fill="var(--card)" stroke="var(--ink)"><rect x="52" y="65" width="32" height="28"/><rect x="96" y="60" width="38" height="32"/><path d="M35 145L18 140L64 70Z"/>`+(n>1?`<rect x="48" y="96" width="40" height="44"/><rect x="90" y="95" width="50" height="46"/><path d="M162 85L192 72L186 140H162Z"/>`:``)+(n>2?`<rect x="56" y="38" width="24" height="24"/><rect x="101" y="30" width="28" height="26"/><rect x="150" y="46" width="24" height="26"/><rect x="34" y="65" width="14" height="28" fill="var(--brass)" opacity=".5"/><rect x="138" y="60" width="14" height="32" fill="var(--brass)" opacity=".5"/>`:``)+`</g>`}
+H($("#msv"),s)}
+$("#ms").onchange=()=>{mi=0;man()};$("#mst").onclick=e=>{const s=e.target.closest(".step");if(s){mi=+s.dataset.i;man()}};
+$("#nx").onclick=()=>{mi=Math.min(mi+1,M[mk[$("#ms").value]].s.length-1);man()};$("#pv").onclick=()=>{mi=Math.max(mi-1,0);man()};man();
+/* GUERRA */
+const W=[["Marinha real","Frota permanente da Coroa, oficiais com patente e disciplina draconiana. Missão: proteger o comércio, destruir frotas inimigas e bloquear portos."],["Corsário","Tem carta de corso: autorização do rei, em guerra, para capturar navios de nações inimigas. A presa vai a um tribunal; a Coroa fica com 10% a 20%. Exemplos: Drake, Jean Bart, Duguay-Trouin."],["Pirata","Ataca qualquer bandeira, sem carta, por lucro próprio: inimigo de toda a humanidade, podia ser enforcado por qualquer nação. A Era de Ouro (1650–1730) cresceu após guerras como a paz de Utrecht (1713)."],["Bucaneiro e filibusteiro","Caçadores de Hispaniola (do boucan, grelha de defumar) que viraram saqueadores livres na Irmandade da Costa, em Tortuga e Port Royal. Henry Morgan atacou Panamá e Maracaibo."],["Democracia pirata","Capitão eleito e deposto por voto, poderes absolutos só na perseguição e no combate. Quartel-mestre equilibrava o poder. Cotas: capitão 1,5 a 2; oficiais 1,25 a 1,5; marujo 1. Seguro: braço direito valia 600 peças de oito."]];
+H($("#who"),W.map(w=>`<div class="card" style="margin:0"><b>${w[0]}</b><br>${w[1]}</div>`).join(""));
+H($("#amm"),"<tr><th>Munição</th><th>Alcance</th><th>Efeito</th></tr>"+[["Bala rasa","200–400 m","Perfura o costado e lança farpas mortais."],["Bala encadeada","100–300 m","Corta cabos, velas e mastros: a favorita dos corsários."],["Cacho de uva","50–200 m","Rasga botes, o leme e grupos no convés."],["Metralha","até 80 m","Varre a tripulação sem danificar o navio a capturar."],["Bala ardente","200–600 m","Incendeia o costado; usada por fortalezas."]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join(""));
+H($("#wat"),"<tr><th>Horário</th><th>Quarto</th></tr>"+[["20h–00h","Prima"],["00h–04h","Modorra (meia-noite)"],["04h–08h","d’Alva"],["08h–12h","Da manhã"],["12h–16h","Da tarde"],["16h–18h / 18h–20h","Quartos de cão"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join(""));
+
+/* GLOSSÁRIO */
+/* GLOSSÁRIO */
+const G=[
+["Abatimento","Deslize lateral do navio causado pelo vento."],
+["Adornar","Inclinar o casco lateralmente sob a força do vento ou mau posicionamento da carga."],
+["Alheta","Diagonal traseira do casco, entre o través e a popa."],
+["Alidade","Régua giratória com pínulas (fendas) usada para visar o Sol ou estrelas no astrolábio."],
+["Amura","Parte curva da proa; direção a 45° da proa."],
+["Arribar","Afastar a proa do vento."],
+["Astrolábio","Anel de bronze graduado e vazado para medir a altura meridiana do Sol."],
+["Bailéu","Primeiro piso abaixo da linha d’água."],
+["Balestilha","Instrumento de vara e travessa deslizante para medir a altura de astros acima do horizonte."],
+["Barlavento","Bordo de onde vem o vento."],
+["Barquinha","Tábua de arrasto usada para medir a velocidade."],
+["Bitácula","Armário que protege a bússola, sem ferro por perto."],
+["Bolina","Navegar o mais perto possível contra o vento."],
+["Bombordo","Lado esquerdo, de quem olha da popa para a proa."],
+["Braça","Medida de profundidade: 6 pés, 1,83 m."],
+["Brulote","Navio incendiário lançado contra a frota inimiga."],
+["Bujarrona","Vela triangular içada à proa, nos estais que vão ao gurupés."],
+["Cabrestante","Tambor vertical com barras que multiplica a força para içar a âncora."],
+["Cadaste","Peça vertical da popa onde se prende o leme."],
+["Calado","Profundidade a que se encontra o ponto mais baixo da quilha abaixo da linha de água."],
+["Carangueja","Verga inclinada na popa que sustenta a vela da mezena."],
+["Cavername","Conjunto das balizas (costelas) que formam o esqueleto curvo do casco."],
+["Enfiada (tiro de)","Disparo que atravessa o navio da proa à popa ou da popa à proa (cruzar o T)."],
+["Escota","Cabo preso ao punho inferior da vela para a caçar (puxar) para trás."],
+["Escovém","Abertura reforçada na proa por onde sai a amarra da âncora."],
+["Estibordo","Lado direito, de quem olha da popa para a proa."],
+["Fundear","Ancorar, soltando cabo de 3 a 5 vezes a profundidade."],
+["Gávea","Vela quadrada do segundo andar do mastro."],
+["Grogue","Ração de rum diluído em água com limão e açúcar, instituída em 1740."],
+["Gualdrope","Cabo de couro que transmite o giro da roda do leme à cana do leme."],
+["Gurupés","Mastro inclinado na proa."],
+["Joanete","Vela do terceiro andar, no topo do mastro."],
+["Légua marítima","3 milhas náuticas (20 ao grau) ou cerca de 3,4 (17,5 ao grau)."],
+["Loxodromia","Rota que corta todos os meridianos sob o mesmo ângulo constante (rumo da bússola)."],
+["Malagueta","Pino de madeira ou bronze onde se dão voltas para fixar os cabos de manobra."],
+["Mezena","Mastro traseiro, com vela latina."],
+["Milha náutica","1 minuto de arco de latitude: 1.852 m."],
+["Nó","1 milha náutica por hora."],
+["Orçar","Aproximar a proa do vento."],
+["Pôr à capa","Parar em alto-mar equilibrando velas contrárias."],
+["Portulana","Carta náutica com teia de linhas de rumo e nomes escritos em terra."],
+["Quilha","Viga base do navio que impede o deslize lateral."],
+["Rizo","Redução da área da vela amarrando faixas dela à verga."],
+["Sentina","Parte mais funda do porão onde se acumula a água infiltrada para ser bombeada."],
+["Sotavento","Bordo para onde o vento vai."],
+["Traquete","Mastro dianteiro e sua vela principal."],
+["Velacho","Vela do segundo andar do mastro do traquete."],
+["Zona morta","Setor contra o vento onde o veleiro não anda."]
+];
+function gl(){const q=$("#gq").value.toLowerCase();H($("#gll"),G.filter(g=>(g[0]+g[1]).toLowerCase().includes(q)).map(g=>`<div class="card" style="margin:6px 0"><b>${g[0]}</b>: ${g[1]}</div>`).join("")||"Nenhum termo encontrado. Tente outra palavra.")}
+$("#gq").oninput=gl;gl();
+
+/* QUIZ */
+const Q=[["Quantos pés tem uma braça?",["4","6","8"],1,"1 braça = 6 pés = 1,83 m."],["Qual vela ajuda o navio a orçar?",["Bujarrona","Traquete","Mezena"],2,"A mezena empurra a popa para longe do vento e a proa sobe."],["A altura da Estrela Polar acima do horizonte é igual a…",["à longitude","à latitude","à declinação"],1,"Polaris está quase sobre o polo norte celeste."],["Quantos graus de longitude a Terra gira por hora?",["10°","15°","20°"],1,"360° em 24 horas."],["Com ampulheta de 28 s, qual a distância entre nós?",["14,4 m","28 m","7 m"],0,"28/3600 × 1852 m."],["Qual turno foi dividido nos quartos de cão?",["Prima","Modorra","16h às 20h"],2,"Isso tornou ímpar o número de turnos e girou a escala."],["Qual manobra perde de 400 a 900 m a sotavento?",["Virar em roda","Virar por davante","Pôr à capa"],0,"Faz uma curva de quase 240° com vento pela popa."],["O que diferencia o corsário do pirata?",["O tamanho do navio","A carta de corso","A bandeira vermelha"],1,"A carta de corso autoriza atacar nações inimigas."],["Qual a causa do escorbuto?",["Falta de vitamina C","Água podre","Frio"],0,"Dieta de biscoito e carne salgada, sem frutas frescas."]];
+let qi=0,qp=0;
+function quiz(){if(qi>=Q.length){H($("#qs"),"");H($("#qb"),`<b style="font-size:20px">Você acertou ${qp} de ${Q.length}.</b><br><button class="b" id="rs">Jogar de novo</button>`);$("#rs").onclick=()=>{qi=0;qp=0;quiz()};return}
+const q=Q[qi];H($("#qs"),`Pergunta ${qi+1} de ${Q.length}`);H($("#qb"),`<b>${q[0]}</b>`+q[1].map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("")+`<div id="qf"></div>`);
+document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i==q[2])qp++;document.querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;if(j==q[2])x.classList.add("ok");else if(j==i)x.classList.add("no")});H($("#qf"),`<p>${i==q[2]?"Correto! ":"Não foi dessa vez. "}${q[3]}</p><button class="b" id="qn">${qi==Q.length-1?"Ver resultado":"Próxima"}</button>`);$("#qn").onclick=()=>{qi++;quiz()}})}
+const RG=[["Beque",8,88,34,20,"Beque","Plataforma sob o gurupés, com a figura de proa e os jardins: assentos sobre o mar que serviam de latrina, lavados pelas ondas (origem do inglês head)."],["Castelo de proa",42,76,70,34,"Castelo","Convés dianteiro elevado: traquete, escovéns, turcos, sino e a cozinha, com o fogão sobre uma caixa de areia."],["Combés",112,94,150,16,"Combés","Parte central rebaixada do convés aberto: botes estivados, grades de ventilação e as equipes que puxam os cabos."],["Tolda",262,80,64,30,"Tolda","Centro de comando: roda do leme, bitácula e ampulheta. Só capitão, oficiais, piloto e timoneiros pisavam ali."],["Tombadilho",326,62,60,48,"Tomb.","O convés mais alto da popa, teto da cabine do capitão: mastro da bandeira e os grandes faróis de popa para a frota seguir o almirante à noite."],["Grande câmara",326,110,62,30,"Câmara","Cabine do capitão e sala de mapas, com janelas de vidro. Em batalha, as divisórias saíam em 5 minutos para os canhões de popa."],["Bateria superior",42,110,284,30,"Bateria superior","Canhões médios (12, 9 e 6 libras). Redes de dormir recolhidas serviam de parapeito contra mosquetes."],["Bateria inferior",42,140,284,30,"Bateria inferior","Canhões pesados (32, 24 e 18 libras), baixos para o peso não virar o navio. A marujada comia e dormia entre eles, com 14 a 18 polegadas de rede por homem."],["Praça d’armas",326,140,60,30,"Praça","Beliches fechados dos oficiais (tenentes, piloto, cirurgião) ao redor de uma mesa."],["Bailéu",44,170,338,26,"Bailéu","Primeiro piso abaixo da linha d’água, onde nenhuma bala entrava direto. No centro, a enfermaria de combate; na proa, o paiol de amarras salgadas; também os paióis do carpinteiro e do despenseiro."],["Paióis",52,196,95,28,"Paióis","Santa Bárbara, a pólvora: paredes forradas de cobre ou chumbo e feltro úmido, ninguém entrava com botas de pregos, luz isolada por vidro grosso. Perto, o paiol do pão, forrado de estanho."],["Porão e sentina",147,196,225,28,"Porão e sentina","Lastro de pedras e ferro com tonéis de água, vinho e carne por cima. A água podre escorre à sentina e as bombas a lançam ao mar."]];
+let ds=`<rect x="0" y="170" width="400" height="70" fill="var(--acc)" opacity=".12" pointer-events="none"/>
+<g stroke="var(--ink)" fill="none" pointer-events="none">
+<path d="M42 84L4 52L7 48L42 78Z" fill="var(--brass)"/><path d="M75 76V12M190 94V6M295 80V16" stroke-width="4" stroke="var(--brass)"/>
+<path d="M55 34H95M162 28H218M272 38H318" stroke-width="2.5"/><path d="M8 88L75 18L190 10L295 20L386 62" stroke="var(--mut)" stroke-dasharray="2 2"/>
+<path d="M386 62L394 50M391 44H399L397 54H393Z" fill="var(--brass)"/>
+<path d="M382 170L392 228H382V170Z" fill="var(--brass)"/><path d="M8 88Q24 108 42 140L52 224H382L388 110L386 62" stroke-width="2.5"/>
+<rect x="46" y="224" width="338" height="5" fill="var(--brass)"/></g>`;
+RG.forEach((r,i)=>{ds+=`<rect class="d" tabindex="0" data-i="${i}" x="${r[1]}" y="${r[2]}" width="${r[3]}" height="${r[4]}" stroke="var(--ink)"/>`+(r[5]?`<text x="${r[1]+r[3]/2}" y="${r[2]+r[4]/2+3}" text-anchor="middle" font-size="9" fill="var(--ink)" pointer-events="none">${r[5]}</text>`:"")});
+for(let x=65;x<315;x+=28)ds+=`<rect x="${x}" y="121" width="7" height="6" fill="var(--ink)" pointer-events="none"/><rect x="${x-6}" y="151" width="8" height="7" fill="var(--ink)" pointer-events="none"/>`;
+ds+=`<path d="M0 170Q20 166 40 170T80 170T120 170T160 170T200 170T240 170T280 170T320 170T360 170T400 170" fill="none" stroke="var(--acc)" stroke-width="1.5" pointer-events="none"/><text x="4" y="165" font-size="8" fill="var(--acc)">linha d’água</text><text x="8" y="14" font-size="12" fill="var(--mut)">proa</text><text x="392" y="14" text-anchor="end" font-size="12" fill="var(--mut)">popa</text>`;H($("#dk"),ds);
+function dkf(i){document.querySelectorAll("#dk .d").forEach(w=>w.classList.toggle("on",w.dataset.i==i));H($("#dkp"),`<b style="font-size:19px">${RG[i][0]}</b><p>${RG[i][6]}</p>`)}
+$("#dk").onclick=e=>{if(e.target.dataset.i)dkf(e.target.dataset.i)};$("#dk").onkeydown=e=>{if(e.key=="Enter"&&e.target.dataset.i)dkf(e.target.dataset.i)};dkf(3);
+const SK=[
+["Quilha","Viga mestra longitudinal na base do casco (a espinha dorsal, feita de carvalho ou teca). Suporta todo o esqueleto e funciona como hidrofólio submerso para impedir o abatimento lateral.",`<rect x="65" y="176" width="275" height="12"/>`],
+["Roda de proa","Peça curva robusta que sobe da extremidade dianteira da quilha, cortando as vagas e fechando o casco à vante.",`<path d="M65 188Q32 145 22 45L34 45Q44 138 68 176Z"/>`],
+["Cadaste","Coluna vertical ou ligeiramente inclinada na popa, encaixada na quilha. Nela articulam-se as governaduras (dobradiças) da porta do leme.",`<path d="M340 188L364 55L352 55L332 176Z"/>`],
+["Cavername (balizas)","As costelas curvas que saem da quilha para ambos os bordos, dando o formato bojudo ao casco e suportando o forro exterior de tábuas.",`<path d="M95 176Q75 120 82 65L90 65Q83 120 103 176ZM140 176Q118 118 126 60L134 60Q126 118 148 176ZM185 176Q162 118 170 58L178 58Q170 118 193 176ZM230 176Q208 118 216 60L224 60Q216 118 238 176ZM275 176Q255 120 262 64L270 64Q263 120 283 176ZM315 176Q300 125 306 70L314 70Q308 125 323 176Z"/>`],
+["Vaus","Vigas transversais que ligam as balizas de bombordo a estibordo. Sustentam o peso dos conveses e dos canhões, evitando que a pressão da água esmague o casco para dentro.",`<path d="M78 82H316V90H78ZM84 122H312V130H84Z"/>`],
+["Curvas","Peças angulares de madeira (muitas vezes tiradas de troncos naturalmente bifurcados) que travam a junção entre os vaus e o cavername como mãos-francesas.",`<path d="M84 90H104L84 110ZM310 90H290L310 110ZM90 130H110L90 150ZM306 130H286L306 150Z"/>`],
+["Sobrequilha e carlinga","Viga interna assentada por cima das cavernas, prensando-as contra a quilha. Nela abrem-se as carlingas, onde encaixam os pés dos mastros.",`<rect x="70" y="166" width="262" height="9"/><rect x="172" y="154" width="24" height="12"/>`]
+];
+H($("#sk"),`<text x="18" y="22" font-size="12" fill="var(--mut)">proa</text><text x="382" y="22" text-anchor="end" font-size="12" fill="var(--mut)">popa</text>`+SK.map((s,i)=>`<g class="d" tabindex="0" data-i="${i}" stroke="var(--ink)" stroke-width="1.5">${s[2]}</g>`).join("")+`<text x="200" y="203" text-anchor="middle" font-size="11" fill="var(--mut)">Toque nas peças da estrutura</text>`);
+function skf(i){document.querySelectorAll("#sk .d").forEach(w=>w.classList.toggle("on",w.dataset.i==i));H($("#skp"),`<b style="font-size:19px">${SK[i][0]}</b><p>${SK[i][1]}</p>`)}
+$("#sk").onclick=e=>{const g=e.target.closest(".d");if(g)skf(g.dataset.i)};$("#sk").onkeydown=e=>{const g=e.target.closest(".d");if(e.key=="Enter"&&g)skf(g.dataset.i)};skf(0);
+const TL=[
+["Roda do leme","Governo mecânico","Introduzida por volta de 1705, substituiu a cana do leme e o pinjinete nos grandes navios. Um tambor cilíndrico enrolava cabos de couro (gualdropes) que desciam por roldanas até à cana do leme, multiplicando a força de 1 ou 2 timoneiros."],
+["Bitácula","Guarda da bússola","Armário de madeira fixado diante da roda do leme, montado exclusivamente com cavilhas de madeira ou pregos de cobre para não desviar a agulha magnética. Guardava a bússola em suspensão Cardan, a candeia de azeite e a ampulheta de meia hora."],
+["Cabrestante","Multiplicador de força","Tambor vertical giratório cravado no convés. Os marujos encaixavam barras de madeira no topo e caminhavam em círculo ao som de cantigas ou rabeca, içando âncoras de várias toneladas ou vergas principais."],
+["Malaguetas","Amarração de cabos","Pinos de madeira dura ou bronze encaixados em mesas nas amuradas e ao redor dos mastros. Cada uma tinha lugar fixo: um gajeiro experiente soltava o cabo certo no escuro absoluto apenas pelo tato."],
+["Bombas de esgoto","Sobrevivência","Tubos verticais com êmbolos de couro ou correntes que subiam da sentina (fundo do porão) até ao convés. Acionadas a braço em turnos exaustivos para expulsar a água que infiltrava pelo calafeto ou por furos de bala."],
+["Bujões de combate","Reparo de emergência","Cones de madeira macia (pinho) envoltos em estopa e sebo. Quando uma bala perfurava o casco na linha de água, os auxiliares do carpinteiro cravavam o bujão a marretadas: a madeira inchava com a água e estancava o rombo."],
+["Porta-voz","Comando acústico","Trombeta cónica de folha-de-flandres ou latão usada pelo capitão ou oficial de quarto na tolda para projetar ordens aos gajeiros a 40 metros de altura nos mastros durante tempestades ou canhoneios."],
+["Botes (chalupa e escaler)","Apoio e reboque","Estivados no combés. A lancha ou chalupa, maior e mais forte, levava âncoras de espiar (para rebocar o navio à força de cabrestante em calmarias ou desencalhar) e tonéis de aguada; o escaler, leve, transportava oficiais."]
+];
+H($("#tl"),TL.map((t,i)=>`<button data-i="${i}">${t[0]}<small>${t[1]}</small></button>`).join(""));
+function tlf(i){document.querySelectorAll("#tl button").forEach((b,j)=>b.classList.toggle("on",i==j));H($("#tlp"),`<b style="font-size:19px">${TL[i][0]}</b> <small style="color:var(--mut)">(${TL[i][1]})</small><p>${TL[i][2]}</p>`)}
+$("#tl").onclick=e=>{const b=e.target.closest("button");if(b)tlf(+b.dataset.i)};tlf(0);
+const CR=[
+["Capitão","Comando supremo","Representante do rei ou dos armadores. Decide o destino estratégico, aplica a justiça e comanda o combate, mas raramente interfere na mecânica das velas.","“Postos de combate! Preparar para virar por davante!”"],
+["Piloto","Navegação e cartografia","O cientista de bordo: mede a altura dos astros, lê a agulha, lança a barquinha e marca o ponto estimado na carta portulana.","“Governa a quarta de sudoeste! Lançar o prumo!”"],
+["Mestre","Manobra e aparelho","Responsável técnico pela mastreação, cabos, velame e estiva da carga no porão (para o navio não adornar). Dirige as grandes manobras da tolda.","“Caça a escota grande! Braceia por barlavento!”"],
+["Contramestre","Execução no convés","Capataz direto da marujada no combés e castelo de proa. Transmite as ordens usando o apito de prata (cujos trinados furam o barulho do vento).","“Guarnecer o cabrestante! Larga o ferro!”"],
+["Timoneiro","Governo na bitácula","Marujo experiente que empunha a cana ou roda do leme, mantendo a proa firme no rumo da bússola e compensando o embate das vagas.","“Andar bom! Leme todo de ló! Assim vai bem!”"],
+["Gajeiros","Trabalho nas alturas","A elite ágil da marujada: trabalham descalços nos vaus, cestos de gávea e vergas a 30 ou 40 metros do mar para largar pano ou tomar rizos na tempestade.","“Vela na amura de estibordo! Gávea nos segundos rizos!”"]
+];
+H($("#cr"),CR.map((c,i)=>`<button data-i="${i}">${c[0]}<small>${c[1]}</small></button>`).join(""));
+function crf(i){document.querySelectorAll("#cr button").forEach((b,j)=>b.classList.toggle("on",i==j));const c=CR[i];H($("#crp"),`<b style="font-size:19px">${c[0]}</b> <small style="color:var(--mut)">(${c[1]})</small><p>${c[2]}</p><div class="out"><b>Vozes de comando:</b> <i>${c[3]}</i></div>`)}
+$("#cr").onclick=e=>{const b=e.target.closest("button");if(b)crf(+b.dataset.i)};crf(0);
+H($("#drk"),[["Cerveja",4.5],["Vinho",.85],["Rum",.28]].map(d=>`<div class="bar"><span>${d[0]}</span><div style="flex:1"><i style="width:${d[1]/4.5*100}%"></i></div><span style="width:40px">${d[1]}</span></div>`).join(""));
+
+const PS=[
+"1. Pergaminho (Velino): pele de vitela preparada com gradiente envelhecido, manchas de manuseio e dupla moldura de esquadria nas bordas.",
+"2. Teia de rumos (Marteloio): um círculo oculto de 16 nós ligados por linhas pretas (8 ventos mestres), verdes (8 meios-ventos) e vermelhas (16 quartos).",
+"3. Costa e interior iluminado: recorte recortado com sombreado interno, estuários de rios, serras, árvores, cidade amuralhada e ilhas pintadas a ouro, azul e carmim.",
+"4. Hidrografia e toponímia: nomes escritos em terra perpendiculares à costa (para não tapar os perigos no mar), sondagens nos canais, baixios de areia (pontilhados) e recifes (cruzes).",
+"5. Rosas dos ventos, caravela e tronco de léguas: rosa de 16 pontas bicolor com flor-de-lis no Norte, nau navegando, monstro marinho e escala com compasso de latão."
+];
+let pi=1;
+function ptl(){
+const s=pi,D="#2b1d0c",R="#9e241b",G="#1e5628",B="#1e4976",O="#c8921a";
+let o=`<defs>
+<radialGradient id="pg" cx="50%" cy="50%" r="72%"><stop offset="0%" stop-color="#f6eed5"/><stop offset="68%" stop-color="#e5d3a3"/><stop offset="100%" stop-color="#c4a76c"/></radialGradient>
+<g id="mt"><path d="M0 0Q5-9 10 0Q14-12 20 0Q24-7 28 0Z" fill="#b89858" stroke="${D}" stroke-width=".7"/></g>
+<g id="anc"><path d="M0-4V4M-3-2H3M-4 1Q0 6 4 1" fill="none" stroke="${B}" stroke-width="1.2"/><circle cx="0" cy="-5" r="1.2" fill="none" stroke="${B}"/></g>
+</defs>
+<rect x="2" y="2" width="296" height="296" rx="6" fill="url(#pg)" stroke="#5c4018" stroke-width="3"/>
+<rect x="7" y="7" width="286" height="286" fill="none" stroke="#8a6836" stroke-width="1"/>
+<rect x="10" y="10" width="280" height="280" fill="none" stroke="#8a6836" stroke-width=".6" stroke-dasharray="6 3"/>
+<circle cx="245" cy="240" r="32" fill="#b59456" opacity=".14"/><circle cx="65" cy="40" r="24" fill="#b59456" opacity=".12"/>`;
+
+/* PASSO 2: TEIA DE RUMOS + NÓS */
+if(s>1){
+o+=`<circle cx="162" cy="148" r="126" fill="none" stroke="#8a6836" stroke-width=".7" stroke-dasharray="2 2"/>`;
+for(let i=0;i<16;i++)for(let j=i+1;j<16;j++){
+const a1=i*22.5*Math.PI/180,a2=j*22.5*Math.PI/180,x1=(162+126*Math.sin(a1)).toFixed(1),y1=(148-126*Math.cos(a1)).toFixed(1),x2=(162+126*Math.sin(a2)).toFixed(1),y2=(148-126*Math.cos(a2)).toFixed(1),k=Math.min(j-i,16-j+i);
+o+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${k%4==0?D:k%2==0?G:R}" stroke-width="${k%4==0?.75:.42}" opacity=".55"/>`;
+}
+for(let i=0;i<16;i++){const a=i*22.5*Math.PI/180;o+=`<circle cx="${(162+126*Math.sin(a)).toFixed(1)}" cy="${(148-126*Math.cos(a)).toFixed(1)}" r="1.8" fill="${D}"/>`;}
+}
+
+/* PASSO 3: COSTA DETALHADA, RIOS, RELEVO, CASTELO E ILHAS */
+if(s>2){
+const cst="M10 28L76 34C92 38 98 48 88 58C76 68 72 82 86 94C102 106 122 98 134 86C140 80 148 82 146 92C142 108 118 118 124 134C130 148 156 142 172 132C184 124 198 128 192 142C184 156 162 162 166 178C170 192 196 196 208 212C216 224 202 238 184 236C166 234 154 216 138 220C122 224 118 244 98 246C78 248 68 232 48 228C28 224 18 232 10 234Z";
+o+=`<path d="${cst}" fill="#c4a464" opacity=".55" transform="translate(-4,3)"/>
+<path d="${cst}" fill="#dfca96" stroke="#7a5828" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="${cst}" fill="none" stroke="${D}" stroke-width="1.3"/>
+<path d="M145 88Q115 76 88 82Q62 88 38 72M124 134Q92 132 68 148Q42 165 18 158M138 220Q108 202 82 208" fill="none" stroke="${B}" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M88 82Q75 68 58 65M68 148Q55 135 36 136" fill="none" stroke="${B}" stroke-width="1"/>
+<use href="#mt" x="22" y="54"/><use href="#mt" x="38" y="58"/><use href="#mt" x="24" y="114"/><use href="#mt" x="44" y="118"/><use href="#mt" x="26" y="186"/><use href="#mt" x="48" y="192"/>
+<g transform="translate(52,158)" stroke="${D}" stroke-width=".7"><rect x="0" y="6" width="18" height="10" fill="#d4b475"/><rect x="-2" y="2" width="5" height="14" fill="#c49e58"/><rect x="15" y="2" width="5" height="14" fill="#c49e58"/><path d="M4 6L9 0L14 6Z" fill="${R}"/><line x1="9" y1="0" x2="9" y2="-6"/><path d="M9-6L16-4L9-2Z" fill="${R}"/></g>
+<g transform="translate(22,78)"><path d="M0 0H12V8Q6 14 0 8Z" fill="${R}" stroke="${D}" stroke-width=".7"/><path d="M6 1V11M1 5H11" stroke="#f6eed5" stroke-width="1.8"/></g>
+<path d="M222 146C232 140 244 146 242 156C240 166 226 168 220 158Z" fill="${O}" stroke="${D}" stroke-width="1.2"/>
+<path d="M238 192C246 188 256 194 252 204C248 212 236 208 234 198Z" fill="${B}" stroke="${D}" stroke-width="1.2"/>
+<path d="M152 252C164 246 176 252 172 262C168 270 150 266 148 258Z" fill="${R}" stroke="${D}" stroke-width="1.2"/>
+<path d="M204 102C210 98 218 102 215 109C212 114 202 110 204 102Z" fill="${G}" stroke="${D}" stroke-width="1.2"/>`;
+}
+
+/* PASSO 4: SONDAGENS NO MAR, RECIFES, BAIXIOS, ÂNCORAS E TOPONÍMIA COSTEIRA */
+if(s>3){
+o+=`<path d="M94 98Q114 108 118 126Q104 128 92 112Z" fill="#c8ab6e" opacity=".45" stroke="${R}" stroke-width=".8" stroke-dasharray="1.5 2"/>
+<path d="M174 152Q192 158 196 174Q180 178 170 164Z" fill="#c8ab6e" opacity=".45" stroke="${R}" stroke-width=".8" stroke-dasharray="1.5 2"/>
+<g fill="${D}" font-size="7.5" font-style="italic">
+<text x="82" y="42" transform="rotate(165 82 42)">C. de S. Roque</text>
+<text x="72" y="64" transform="rotate(155 72 64)" fill="${R}" font-weight="700">Baía Formosa</text>
+<text x="128" y="92" transform="rotate(135 128 92)">Ponta Grossa</text>
+<text x="116" y="136" transform="rotate(160 116 136)" fill="${R}" font-weight="700">Rio Real</text>
+<text x="176" y="138" transform="rotate(140 176 138)">Cabo Frio</text>
+<text x="158" y="182" transform="rotate(162 158 182)">Angra</text>
+<text x="196" y="218" transform="rotate(145 196 218)" fill="${R}" font-weight="700">Porto Seguro</text>
+<text x="132" y="218" transform="rotate(115 132 218)">B. dos Ilhéus</text>
+<text x="92" y="240" transform="rotate(105 92 240)">C. Raso</text>
+</g>
+<g fill="${D}" font-size="7.5" font-weight="700">
+<text x="98" y="64">5</text><text x="110" y="68">8</text><text x="124" y="72">12</text>
+<text x="134" y="122">4</text><text x="146" y="120">7</text><text x="158" y="116">11</text>
+<text x="180" y="186">6</text><text x="194" y="184">9</text><text x="208" y="180">14</text>
+<text x="122" y="242">5</text><text x="134" y="248">8</text>
+</g>
+<g fill="${R}" font-size="8.5">
+<text x="148" y="84">✚</text><text x="156" y="90">✚</text>
+<text x="200" y="134">✚</text><text x="208" y="142">✚</text>
+<text x="214" y="218">✚</text><text x="220" y="226">✚</text>
+<text x="176" y="252">✚</text>
+</g>
+<use href="#anc" x="98" y="76"/><use href="#anc" x="140" y="130"/><use href="#anc" x="182" y="194"/>`;
+}
+
+/* PASSO 5: ROSA DE 16 PONTAS, NAU, MONSTRO MARINHO E CARTELA DE ESCALA */
+if(s>4){
+let rw=`<g transform="translate(238,62)"><circle r="32" fill="#f6eed5" stroke="${D}" stroke-width="1"/><circle r="29" fill="none" stroke="${R}" stroke-width=".6"/>`;
+for(let i=0;i<16;i++){const a=i*22.5,l=i%4==0?29:i%2==0?23:17,w=i%4==0?4.5:3,c1=i%4==0?R:i%2==0?G:O;
+rw+=`<g transform="rotate(${a})"><path d="M0 0L-${w} -7L0 -${l}Z" fill="${c1}" stroke="${D}" stroke-width=".4"/><path d="M0 0L${w} -7L0 -${l}Z" fill="${D}" stroke="${D}" stroke-width=".4"/></g>`;}
+rw+=`<circle r="5" fill="${O}" stroke="${D}" stroke-width=".7"/><circle r="2" fill="${R}"/><path d="M0-30C-3-35-6-33-4-30C-6-32-6-38 0-41C6-38 6-32 4-30C6-33 3-35 0-30Z" fill="${O}" stroke="${D}" stroke-width=".6"/></g>`;
+o+=rw+`
+<g transform="translate(248,142)" stroke="${D}" stroke-width=".9">
+<path d="M-12 6L-16 0H14L18-5H22L16 8H-10Z" fill="#b88746"/>
+<line x1="-4" y1="0" x2="-4" y2="-16"/><line x1="6" y1="0" x2="6" y2="-20"/>
+<path d="M-10-4Q-2-12 0-15Q-1-6-2-2Z" fill="#fff"/>
+<path d="M-2-3Q8-14 10-19Q9-8 6-2Z" fill="#fff"/>
+<path d="M2-10H6M4-12V-8" stroke="${R}" stroke-width="1.1"/>
+<path d="M6-20L12-18L6-16Z" fill="${R}" stroke="none"/>
+<path d="M-16 9Q-8 7 0 9T16 9" fill="none" stroke="${B}"/>
+</g>
+<g transform="translate(256,246)" stroke="${D}" stroke-width=".9" fill="${G}" fill-opacity=".5">
+<path d="M-18 6Q-12-4-6 4Q0 8 6 0Q12-6 18 4Q14 8 8 4Q2 10-6 6Q-12 2-18 6Z"/>
+<path d="M-18 6L-23 2L-21 8Z" fill="${R}"/>
+<path d="M-22 10Q-10 8 2 10T22 10" fill="none" stroke="${B}"/>
+</g>
+<g transform="translate(18,256)">
+<path d="M4 6H120V24H4L9 15Z M120 6L115 15L120 24" fill="#f3e6c4" stroke="${D}" stroke-width="1"/>
+<line x1="14" y1="15" x2="110" y2="15" stroke="${D}" stroke-width="1.2"/>
+<line x1="14" y1="18" x2="110" y2="18" stroke="${D}" stroke-width=".8"/>
+<path d="M14 11V20M38 11V20M62 11V20M86 11V20M110 11V20M19 13V18M24 13V18M29 13V18M33 13V18" stroke="${D}" stroke-width=".8"/>
+<text x="62" y="10" text-anchor="middle" font-size="6.5" font-weight="700" fill="${D}">TRONCO DE LÉGUAS</text>
+<path d="M50 14L62-12L74 14" fill="none" stroke="#8a6214" stroke-width="2" stroke-linecap="round"/>
+<path d="M50 14L62-12L74 14" fill="none" stroke="${D}" stroke-width=".6"/>
+<circle cx="62" cy="-13" r="3" fill="${O}" stroke="${D}" stroke-width=".8"/>
+</g>`;
+}
+
+H($("#pts"),o);
+H($("#ptx"),PS.map((t,i)=>`<div class="step ${i+1==s?"on":""}" data-i="${i+1}"><b>Passo ${i+1}</b>${i+1==s?"<br>"+t.slice(3):""}</div>`).join(""));
+}
+$("#ptx").onclick=e=>{const st=e.target.closest(".step");if(st){pi=+st.dataset.i;ptl()}};
+$("#p1").onclick=()=>{pi=Math.max(1,pi-1);ptl()};$("#p2").onclick=()=>{pi=Math.min(5,pi+1);ptl()};ptl();
+
+function tri(){const a=+$("#ta").value,b=+$("#tb").value,d=+$("#td").value,r=Math.PI/180,s=Math.sin((a+b)*r),r1=d*Math.sin(b*r)/s,r2=d*Math.sin(a*r)/s,h=r1*Math.sin(a*r),k=140/d,x=Math.min(280,Math.max(20,75+r1*k*Math.cos(a*r))),y=Math.max(22,175-r1*k*Math.sin(a*r));
+H($("#tdv"),d);H($("#tav"),a);H($("#tbv"),b);
+H($("#tv"),`<path d="M0 0H300V45Q250 62 200 48Q150 35 100 55Q50 68 0 42Z" fill="var(--brass)" opacity=".2"/><path d="M0 42Q50 68 100 55Q150 35 200 48Q250 62 300 45" fill="none" stroke="var(--brass)" stroke-width="1.5"/>
+<line x1="${x}" y1="${y}" x2="${x}" y2="175" stroke="var(--mut)" stroke-dasharray="2 3"/><text x="${x+4}" y="${(y+175)/2}" font-size="10" fill="var(--mut)">${f(h)} mn</text>
+<line x1="30" y1="175" x2="275" y2="175" stroke="var(--ink)" stroke-dasharray="5 3"/><path d="M270 171L278 175L270 179" fill="none" stroke="var(--ink)"/>
+<line x1="75" y1="175" x2="${x}" y2="${y}" stroke="var(--acc)" stroke-width="2"/><line x1="215" y1="175" x2="${x}" y2="${y}" stroke="var(--red)" stroke-width="2"/>
+<path d="M97 175A22 22 0 0 0 ${75+22*Math.cos(a*r)} ${175-22*Math.sin(a*r)}" fill="none" stroke="var(--acc)"/><text x="100" y="168" font-size="10" fill="var(--acc)">${a}°</text>
+<path d="M193 175A22 22 0 0 1 ${215-22*Math.cos(b*r)} ${175-22*Math.sin(b*r)}" fill="none" stroke="var(--red)"/><text x="172" y="168" font-size="10" fill="var(--red)">${b}°</text>
+<path d="M${x-12} ${y+8}L${x-3} ${y-8}L${x+2} ${y-2}L${x+7} ${y-13}L${x+16} ${y+8}Z" fill="var(--brass)" stroke="var(--ink)"/><text x="${x}" y="${y-16}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">Pico</text>
+<path d="M65 178L70 183H80L85 178Z M75 178V168L82 174Z" fill="var(--acc)"/><text x="75" y="195" text-anchor="middle" font-size="11" fill="var(--ink)">Pos. 1</text>
+<path d="M205 178L210 183H220L225 178Z M215 178V168L222 174Z" fill="var(--red)"/><text x="215" y="195" text-anchor="middle" font-size="11" fill="var(--ink)">Pos. 2</text>`);
+H($("#to"),`Pico a <b>${f(r1)} milhas</b> da Posição 1 e <b>${f(r2)} milhas</b> da Posição 2.<br>Distância perpendicular à rota: <b>${f(h)} milhas</b> (${f(h/3,1)} léguas).`)}
+["td","ta","tb"].forEach(i=>$("#"+i).oninput=tri);tri();
+
+/* ROSA DOS VENTOS (32 QUARTAS) */
+const Q32=[
+["Norte (N)","Tramontana"],["Norte quarta a Nordeste (N¼NE)",""],["Nor-Nordeste (NNE)",""],["Nordeste quarta a Norte (NE¼N)",""],
+["Nordeste (NE)","Grego"],["Nordeste quarta a Leste (NE¼E)",""],["Lés-Nordeste (ENE)",""],["Leste quarta a Nordeste (E¼NE)",""],
+["Leste (E)","Levante"],["Leste quarta a Sudeste (E¼SE)",""],["Lés-Sudeste (ESE)",""],["Sudeste quarta a Leste (SE¼E)",""],
+["Sudeste (SE)","Xaloco (Siroco)"],["Sudeste quarta a Sul (SE¼S)",""],["Su-Sudeste (SSE)",""],["Sul quarta a Sudeste (S¼SE)",""],
+["Sul (S)","Meio-dia (Ostro)"],["Sul quarta a Sudoeste (S¼SO)",""],["Su-Sudoeste (SSO)",""],["Sudoeste quarta a Sul (SO¼S)",""],
+["Sudoeste (SO)","Lebeche (Garbino)"],["Sudoeste quarta a Oeste (SO¼O)",""],["Oés-Sudoeste (OSO)",""],["Oeste quarta a Sudoeste (O¼SO)",""],
+["Oeste (O)","Ponente"],["Oeste quarta a Noroeste (O¼NO)",""],["Oés-Noroeste (ONO)",""],["Noroeste quarta a Oeste (NO¼O)",""],
+["Noroeste (NO)","Mestral"],["Noroeste quarta a Norte (NO¼N)",""],["Nor-Noroeste (NNO)",""],["Norte quarta a Noroeste (N¼NO)",""]
+];
+function cmp(){const i=+$("#cpr").value,a=i*11.25,r=a*Math.PI/180,tp=i%4==0?"Vento principal (linha preta)":i%2==0?"Meio-vento (linha verde)":"Quarta de vento (linha vermelha)";
+H($("#cpv"),i+1);
+let s=`<circle cx="120" cy="120" r="102" fill="var(--card)" stroke="var(--line)" stroke-width="2"/>`;
+for(let j=0;j<32;j++){const ja=j*11.25*Math.PI/180,l=j%4==0?98:j%2==0?88:78,c=j%4==0?"var(--ink)":j%2==0?"#2e6b34":"var(--red)";
+s+=`<line x1="120" y1="120" x2="${120+l*Math.sin(ja)}" y2="${120-l*Math.cos(ja)}" stroke="${c}" stroke-width="${j%4==0?1.8:1}" opacity=".7"/>`}
+s+=`<circle cx="120" cy="120" r="52" fill="var(--card)" stroke="var(--brass)"/><line x1="120" y1="120" x2="${120+98*Math.sin(r)}" y2="${120-98*Math.cos(r)}" stroke="var(--brass)" stroke-width="3.5"/><circle cx="${120+98*Math.sin(r)}" cy="${120-98*Math.cos(r)}" r="4.5" fill="var(--brass)"/><circle cx="120" cy="120" r="5" fill="var(--ink)"/><text x="120" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">N ⚜</text><text x="230" y="124" text-anchor="middle" font-size="11" fill="var(--mut)">E</text><text x="120" y="236" text-anchor="middle" font-size="11" fill="var(--mut)">S</text><text x="10" y="124" text-anchor="middle" font-size="11" fill="var(--mut)">O</text>`;
+H($("#cps"),s);H($("#cpo"),`<b>${Q32[i][0]}</b> — <b>${f(a,2)}°</b><br>Classificação portulana: ${tp}${Q32[i][1]?`<br>Tradição mediterrânica: <b>${Q32[i][1]}</b>`:""}`)}
+$("#cpr").oninput=cmp;cmp();
+
+const hull=(x,y,r,c,s=1)=>`<g transform="translate(${x} ${y}) rotate(${r}) scale(${s})"><path d="M0-26C10-12 10 14 6 26L-6 26C-10 14-10-12 0-26Z" fill="${c}" stroke="var(--ink)" stroke-width="1.5"/><line x1="0" y1="-14" x2="0" y2="16" stroke="var(--ink)" opacity=".4"/></g>`;
+const P=(a,R)=>[150+R*Math.sin(a*Math.PI/180),125-R*Math.cos(a*Math.PI/180)];
+const wd=a=>{const p=P(a-30,70),q=P(a+30,70);return `<path d="M150 125L${p[0]} ${p[1]}A70 70 0 0 1 ${q[0]} ${q[1]}Z" fill="var(--red)" opacity=".2"/>`};
+function rk(){const t=+$("#rka").value,a=P(t,100),rs=Math.round(Math.max(0,1-Math.abs(t-90)/60)*100);H($("#rkv"),t);
+H($("#rks"),`<circle cx="150" cy="125" r="100" fill="none" stroke="var(--line)" stroke-dasharray="3 3"/>${wd(90)}${wd(270)}${hull(150,125,0,"var(--card)",1.3)}<line x1="${a[0]}" y1="${a[1]}" x2="150" y2="125" stroke="var(--red)" stroke-dasharray="4 3"/>${hull(a[0],a[1],t+90,"var(--acc)",.9)}<text x="150" y="14" text-anchor="middle" font-size="12" fill="var(--mut)">proa do inimigo</text><text x="150" y="236" text-anchor="middle" font-size="12" fill="var(--mut)">popa do inimigo</text>`);
+let m=t>=150?"<b>Enfiada pela popa:</b> a salva entra pelas janelas de vidro da cabine e percorre o convés por dentro, matando oficiais e derrubando canhões e o leme."
+:t<=30?"<b>Enfiada pela proa:</b> a salva varre o navio de ponta a ponta. A proa é mais forte que a popa, mas o inimigo também não responde."
+:rs>70?"<b>Duelo de bordadas:</b> as baterias dos dois lados se alcançam. Vence quem tem mais peso de tiro e mira melhor no balanço da onda."
+:"<b>Ângulo intermediário:</b> só parte da bateria inimiga alcança você. Aproxime-se da proa ou da popa para ganhar vantagem.";
+H($("#rko"),`Canhões inimigos que alcançam você: <b>${rs}%</b><br>${m}`)}
+$("#rka").oninput=rk;rk();
+function bl(){const w=$("#blw").value=="b",hv=(x,c)=>`<g transform="translate(${x} 100) rotate(12)"><path d="M-40 0H40L28 34H-28Z" fill="${c}" stroke="var(--ink)" stroke-width="1.5"/><line x1="0" y1="0" x2="0" y2="-62" stroke="var(--ink)" stroke-width="3"/><path d="M0-58L24-28H0Z" fill="var(--card)" stroke="var(--ink)"/></g>`;
+H($("#bls"),`<rect x="0" y="128" width="300" height="42" fill="var(--acc)" opacity=".18"/><path d="M8 18H62M52 12L62 18L52 24" fill="none" stroke="var(--red)" stroke-width="3"/><text x="8" y="36" font-size="11" fill="var(--red)">vento</text>${hv(70,w?"var(--brass)":"var(--card)")}${hv(230,w?"var(--card)":"var(--brass)")}<line x1="112" y1="112" x2="186" y2="132" stroke="var(--ink)" stroke-dasharray="3 2"/><text x="118" y="150" font-size="10" fill="var(--mut)">tiro baixo</text><line x1="190" y1="104" x2="100" y2="50" stroke="var(--ink)" stroke-dasharray="3 2"/><text x="150" y="68" font-size="10" fill="var(--mut)">tiro alto</text><text x="${w?70:230}" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Você</text>`);
+H($("#blo"),w?"<b>Iniciativa total:</b> você escolhe a distância, pode forçar a abordagem e lançar brulotes. Custo: o navio inclina em direção ao inimigo, as portinholas baixas podem entrar na água sob mar grosso e os tiros saem baixos.":"<b>Defesa e tiro alto:</b> o navio inclina para longe do inimigo, mantendo as baterias secas e os canhões altos, ideais para destruir mastros e velas. Também pode arribar e fugir com vento em popa, mas não escolhe o momento do combate.")}
+$("#blw").onchange=bl;bl();
+const BP=[["Engano e perseguição","Aproxima-se sob bandeira falsa amiga. Só dentro do alcance arria-a e iça o Jolly Roger. Rendição imediata poupava a tripulação; resistir levava a bandeira vermelha de sem quartel."],["Ângulo morto e tiro no leme","A chalupa cola na alheta do mercante pesado. Os melhores atiradores, nos cestos de gávea e na proa, abatem quem chegar perto da roda do leme."],["Cegar e varrer","Balas encadeadas rasgam a vela grande ou quebram a verga da gávea, impedindo o alvo de virar. Metralha e pedreiros varrem o convés ao encostar."],["Arpéus e assalto","Ganchos de quatro pontas amarram os navios. Panelas de fedor, granadas, 2 a 4 pistolas no peito, alfanjes e machados no corpo a corpo."]];let bi=0;
+function bd(){const pos=[[50,40],[85,128],[100,122],[112,115]][bi],fl=["#2a5d9f","#111","#111","#b3342b"][bi];let o=`<rect width="300" height="180" fill="var(--acc)" opacity=".12"/>${hull(190,90,90,"var(--card)",1.7)}<line x1="190" y1="62" x2="190" y2="108" stroke="var(--ink)" stroke-width="3"/>`;
+if(bi==1)o+=`<circle cx="140" cy="90" r="5" fill="none" stroke="var(--red)" stroke-width="2"/><text x="140" y="78" text-anchor="middle" font-size="10" fill="var(--red)">leme</text>`;
+if(bi>=2)o+=`<line x1="${pos[0]}" y1="${pos[1]}" x2="190" y2="66" stroke="var(--red)" stroke-dasharray="3 3"/><text x="190" y="58" text-anchor="middle" font-size="14" fill="var(--red)">✖</text>`;
+if(bi==3)for(let i=0;i<3;i++)o+=`<line x1="${pos[0]+8}" y1="${pos[1]-4+i*4}" x2="${150+i*12}" y2="${100+i*6}" stroke="var(--ink)" stroke-width="2"/>`;
+o+=hull(pos[0],pos[1],90,"var(--brass)",.8)+`<circle cx="${pos[0]}" cy="${pos[1]-20}" r="6" fill="${fl}" stroke="var(--ink)"/><text x="${pos[0]}" y="${pos[1]+30}" text-anchor="middle" font-size="10" fill="var(--ink)">chalupa</text><text x="230" y="150" font-size="10" fill="var(--ink)">mercante</text>`;
+H($("#bps"),o);H($("#bpl"),BP.map((p,i)=>`<div class="step ${i==bi?"on":""}" data-i="${i}"><b>${i+1}. ${p[0]}</b>${i==bi?"<br>"+p[1]:""}</div>`).join(""))}
+$("#bpl").onclick=e=>{const s=e.target.closest(".step");if(s){bi=+s.dataset.i;bd()}};$("#bp1").onclick=()=>{bi=Math.max(0,bi-1);bd()};$("#bp2").onclick=()=>{bi=Math.min(3,bi+1);bd()};bd();
+Q.push(["Quantos canhões inimigos alcançam você numa enfiada pela popa?",["Todos","Quase nenhum","Metade"],1,"Quem cruza a popa fica fora do ângulo das baterias laterais."],["Por que o navio a barlavento atira mais baixo?",["Fica inclinado em direção ao inimigo","Usa canhões menores","Tem menos pólvora"],0,"O vento inclina os dois para sotavento, abaixando o bordo de quem está a barlavento."],["Para que serve a bala encadeada na abordagem?",["Furar o casco","Rasgar velas e partir vergas","Incendiar o navio"],1,"Imobiliza o alvo sem afundá-lo."],["Qual o primeiro passo ao suspender o ferro?",["Largar o traquete","Virar a pique","Soltar a mezena"],1,"A amarra deve ficar vertical antes de arrancar a âncora."]);
+quiz();show("navios");
+function plt(){const a=+$("#prm").value,d=+$("#pdt").value,r=a*Math.PI/180,dx=Math.sin(r),dy=-Math.cos(r),x0=65,y0=135,L=d*6.5,x1=x0+L*dx,y1=y0+L*dy,rx=235,ry=60,nx=-dy*18,ny=dx*18;
+H($("#prmv"),a);H($("#pdtv"),d);
+H($("#plv"),`<rect width="300" height="200" rx="6" fill="#e8dcb8" stroke="#a88f5a"/>
+<circle cx="${rx}" cy="${ry}" r="32" fill="none" stroke="#8c7241"/><path d="M${rx} ${ry-32}V${ry+32}M${rx-32} ${ry}H${rx+32}" stroke="#a88f5a" stroke-width=".6"/>
+<line x1="${rx-28*dx}" y1="${ry-28*dy}" x2="${rx+32*dx}" y2="${ry+32*dy}" stroke="#b3342b" stroke-width="1.5" stroke-dasharray="3 2"/>
+<g stroke="#5a4520" stroke-width="4" opacity=".65"><line x1="${x0-20*dx}" y1="${y0-20*dy}" x2="${x0+110*dx}" y2="${y0+110*dy}"/><line x1="${x0-20*dx+nx}" y1="${y0-20*dy+ny}" x2="${x0+110*dx+nx}" y2="${y0+110*dy+ny}"/><line x1="${x0+10*dx}" y1="${y0+10*dy}" x2="${x0+25*dx+nx}" y2="${y0+25*dy+ny}" stroke-width="1.5"/><line x1="${x0+70*dx}" y1="${y0+70*dy}" x2="${x0+85*dx+nx}" y2="${y0+85*dy+ny}" stroke-width="1.5"/></g>
+<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="#0e5a73" stroke-width="2.5"/>
+<path d="M${x0} ${y0}L${(x0+x1)/2-ny*1.3} ${(y0+y1)/2+nx*1.3}L${x1} ${y1}" fill="none" stroke="#9a6b12" stroke-width="1.5"/>
+<circle cx="${x0}" cy="${y0}" r="3.5" fill="#14232e"/><circle cx="${x1}" cy="${y1}" r="4" fill="#b3342b"/>
+<text x="${x0}" y="${y0+14}" text-anchor="middle" font-size="10" fill="#14232e">Partida</text><text x="${x1}" y="${y1-8}" text-anchor="middle" font-size="10" font-weight="700" fill="#b3342b">Ponto estimado</text>`);
+H($("#plo"),`Rumo verdadeiro: <b>${a}°</b> | Distância: <b>${d} léguas</b> (${d*3} mn)<br>Avanço Norte/Sul: <b>${f(Math.abs(d*Math.cos(r)))} léguas ${Math.cos(r)>=0?"N":"S"}</b><br>Apartamento Leste/Oeste: <b>${f(Math.abs(d*Math.sin(r)))} léguas ${Math.sin(r)>=0?"E":"O"}</b>`)}
+["prm","pdt"].forEach(i=>$("#"+i).oninput=plt);plt();
+const VM=[
+["Volta da Mina (séc. XV)","Na costa africana, correntes e alísios sopram sempre para sul. Para voltar a Lisboa, as caravelas metiam-se ao mar largo para noroeste, passavam pelos Açores onde apanhavam os ventos de oeste e regressavam a Portugal.",`<path class="vec" d="M165 52Q145 85 155 115" fill="none" stroke="var(--brass)" stroke-width="2"/><path class="vec" d="M155 115Q95 100 110 55Q135 42 165 52" fill="none" stroke="var(--red)" stroke-width="2.5"/>`],
+["Carreira da Índia (Ida)","Após Cabo Verde, para fugir às calmarias da Guiné e ao vento sul africano, as naus abriam um imenso arco para sudoeste quase até ao Brasil (assim Cabral o achou em 1500) e apanhavam os ventos de oeste no paralelo 35° S para dobrar o Cabo da Boa Esperança.",`<path class="vec" d="M165 52Q135 95 142 120Q92 155 125 195Q165 212 205 195" fill="none" stroke="var(--red)" stroke-width="2.5"/>`],
+["Tornaviagem (Regresso)","Dobrado o Cabo da Boa Esperança, os alísios de sudeste empurravam a nau até Santa Helena (aguada e cítricos), cruzando o Equador rumo ao largo dos Açores antes de aproar a Lisboa.",`<path class="vec" d="M205 195Q165 165 140 125Q98 75 120 52L165 52" fill="none" stroke="var(--acc)" stroke-width="2.5"/>`]
+];
+function vmar(){const i=+$("#vmsel").value;H($("#vmout"),`<b>${VM[i][0]}:</b> ${VM[i][1]}`);
+H($("#vmap"),`<rect width="300" height="240" rx="6" fill="var(--acc)" opacity=".12"/>
+<path d="M155 20L185 25L175 58L162 55L172 72L215 95L195 135L210 192L192 195L175 135L145 115L142 85L160 55Z" fill="var(--brass)" opacity=".35" stroke="var(--ink)"/>
+<path d="M20 40L75 65L60 105L95 135L115 155L85 215L55 220L65 155L30 115Z" fill="var(--brass)" opacity=".35" stroke="var(--ink)"/>
+<line x1="0" y1="125" x2="300" y2="125" stroke="var(--line)" stroke-dasharray="3 3"/><text x="8" y="121" font-size="9" fill="var(--mut)">Equador</text>
+<circle cx="165" cy="52" r="3" fill="var(--ink)"/><text x="172" y="54" font-size="9" fill="var(--ink)">Lisboa</text>
+<circle cx="118" cy="56" r="2.5" fill="var(--ink)"/><text x="115" y="48" text-anchor="end" font-size="9" fill="var(--mut)">Açores</text>
+<circle cx="202" cy="195" r="3" fill="var(--ink)"/><text x="208" y="198" font-size="9" fill="var(--ink)">Cabo</text>${VM[i][2]}`)}
+$("#vmsel").onchange=vmar;vmar();
+
+const NVG=[
+["Bartolomeu Dias","Cabo das Tormentas (1488)","Dobrou o extremo sul da África abrindo a porta do Oceano Índico e provando a ligação entre o Atlântico e o Oriente."],
+["Vasco da Gama","Caminho marítimo para a Índia (1497–1499)","Executou a maior volta pelo Atlântico Sul — 90 dias sem ver terra — até chegar a Calecute."],
+["Pedro Álvares Cabral","Brasil e Índia (1500)","Comandou a segunda armada da Índia; ao abrir a Volta do Mar a oeste, aportou em Porto Seguro antes de seguir para o Índico."],
+["Fernão de Magalhães & Elcano","Primeira circum-navegação (1519–1522)","Descobriu o estreito no sul da América e cruzou o Pacífico; Elcano concluiu a volta ao mundo na nau Victoria."],
+["James Cook","Cartografia científica e saúde (1768–1779)","Mapeou o Pacífico da Nova Zelândia ao Havaí usando cronômetros marítimos de precisão e erradicando o escorbuto da tripulação."]
+];
+H($("#navg"),NVG.map((g,i)=>`<button data-i="${i}">${g[0]}<small>${g[1]}</small></button>`).join(""));
+function nvgf(i){document.querySelectorAll("#navg button").forEach((b,j)=>b.classList.toggle("on",i==j));H($("#navgp"),`<b>${NVG[i][0]}</b> — ${NVG[i][1]}<p>${NVG[i][2]}</p>`)}
+$("#navg").onclick=e=>{const b=e.target.closest("button");if(b)nvgf(+b.dataset.i)};nvgf(0);
+
+const CIV=[
+["Polinésios","Canoas duplas e mapas de varetas","Colonizaram o Pacífico a milhares de milhas sem bússola: liam o caminho de estrelas no horizonte, a refração da ondulação em ilhas distantes (mapas de nervuras de palma) e o voo de aves."],
+["China (Dinastia Ming)","Juncos do tesouro de Zheng He","No início do séc. XV, os juncos de até 9 mastros já usavam compartimentos estanques no casco (séculos antes da Europa), leme axial fenestrado, velas com talas de bambu e bússola."],
+["Árabes e Oceano Índico","Dhows e o Kamal","Dominaram o regime das monções com velas latinas triangulares, cascos costurados com fibra de coco e o kamal (tábua com cordão de nós presa aos dentes para medir a altura da Polar)."],
+["Vikings (Nórdicos)","Dracares e pedra do sol","Cascos trincados (tábuas sobrepostas) flexíveis que enfrentavam o Atlântico Norte e subiam rios rasos. Usavam tábuas de sombra solar e cristais de espato da Islândia para achar o Sol sob nevoeiro."]
+];
+H($("#civ"),CIV.map((c,i)=>`<button data-i="${i}">${c[0]}<small>${c[1]}</small></button>`).join(""));
+function civf(i){document.querySelectorAll("#civ button").forEach((b,j)=>b.classList.toggle("on",i==j));H($("#civp"),`<b>${CIV[i][0]}</b> <small style="color:var(--mut)">(${CIV[i][1]})</small><p>${CIV[i][2]}</p>`)}
+$("#civ").onclick=e=>{const b=e.target.closest("button");if(b)civf(+b.dataset.i)};civf(0);
+</script></body></html>
